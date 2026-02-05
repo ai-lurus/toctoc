@@ -31,7 +31,17 @@ export default function RegisterScreen() {
   const onSubmit = async (data: RegisterFormData) => {
     try {
       await signUp(data.email, data.password, data.fullName);
-      router.replace("/(auth)/role-selection");
+      const { session: currentSession } = useAuthStore.getState();
+      if (currentSession) {
+        router.replace("/(auth)/role-selection");
+      } else {
+        // Email confirmation required — user must verify first
+        Alert.alert(
+          "Revisa tu correo",
+          "Te enviamos un enlace de verificación. Confírmalo para continuar.",
+          [{ text: "OK", onPress: () => router.replace("/(auth)/login") }],
+        );
+      }
     } catch (error: any) {
       Alert.alert("Error", error.message || "No se pudo crear la cuenta");
     }

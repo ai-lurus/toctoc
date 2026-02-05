@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Alert, ActivityIndicator } from "react-native";
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -22,7 +22,7 @@ const roles: { role: UserRole; title: string; description: string; icon: keyof t
 ];
 
 export default function RoleSelectionScreen() {
-  const { setRole, isLoading } = useAuthStore();
+  const { setRole, isLoading, user } = useAuthStore();
 
   const handleSelectRole = async (role: UserRole) => {
     Alert.alert(
@@ -44,6 +44,16 @@ export default function RoleSelectionScreen() {
       ],
     );
   };
+
+  if (!user) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={styles.content}>
+          <ActivityIndicator size="large" color={COLORS.primary} />
+        </View>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.container}>

@@ -63,16 +63,10 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       });
       if (error) throw error;
 
-      if (data.user) {
-        // Create profile
-        const { error: profileError } = await supabase
-          .from("profiles")
-          .insert({
-            id: data.user.id,
-            email,
-            full_name: fullName,
-          });
-        if (profileError) throw profileError;
+      // Set session/user immediately so role-selection can use them
+      if (data.session) {
+        set({ session: data.session, user: data.session.user });
+        await get().fetchProfile();
       }
     } finally {
       set({ isLoading: false });
@@ -113,9 +107,8 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       .eq("id", userId);
     if (error) throw error;
 
-    set((state) => ({
-      profile: state.profile ? { ...state.profile, role } : null,
-    }));
+    // Re-fetch full profile to ensure local state matches DB
+    await get().fetchProfile();
   },
 
   fetchProfile: async () => {
