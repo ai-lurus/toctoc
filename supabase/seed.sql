@@ -1,3 +1,4 @@
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
 -- Seed: Categories (already inserted, skip if exist)
 INSERT INTO public.categories (id, name, description, icon, color, sort_order) VALUES
   ('c1000000-0000-0000-0000-000000000001', 'Limpieza', 'Limpieza de hogar y oficinas', 'sparkles', '#10B981', 1),
@@ -80,13 +81,13 @@ WHERE name = 'paint_type' AND service_id = 'a1000000-0000-0000-0000-000000000010
 -- 3 Clients
 INSERT INTO auth.users (instance_id, id, aud, role, email, encrypted_password, email_confirmed_at, raw_user_meta_data, raw_app_meta_data, created_at, updated_at, confirmation_token, recovery_token, email_change_token_new, email_change)
 VALUES
-  ('00000000-0000-0000-0000-000000000000', 'd0000000-0000-0000-0000-000000000001', 'authenticated', 'authenticated', 'maria@test.com',  crypt('password123', gen_salt('bf')), now(), '{"full_name":"María García"}'::jsonb,    '{"provider":"email","providers":["email"]}'::jsonb, now(), now(), '', '', '', ''),
-  ('00000000-0000-0000-0000-000000000000', 'd0000000-0000-0000-0000-000000000002', 'authenticated', 'authenticated', 'carlos@test.com', crypt('password123', gen_salt('bf')), now(), '{"full_name":"Carlos López"}'::jsonb,    '{"provider":"email","providers":["email"]}'::jsonb, now(), now(), '', '', '', ''),
-  ('00000000-0000-0000-0000-000000000000', 'd0000000-0000-0000-0000-000000000003', 'authenticated', 'authenticated', 'ana@test.com',    crypt('password123', gen_salt('bf')), now(), '{"full_name":"Ana Rodríguez"}'::jsonb,  '{"provider":"email","providers":["email"]}'::jsonb, now(), now(), '', '', '', ''),
+  ('00000000-0000-0000-0000-000000000000', 'd0000000-0000-0000-0000-000000000001', 'authenticated', 'authenticated', 'maria@test.com',  extensions.crypt('password123', extensions.gen_salt('bf')), now(), '{"full_name":"María García"}'::jsonb,    '{"provider":"email","providers":["email"]}'::jsonb, now(), now(), '', '', '', ''),
+  ('00000000-0000-0000-0000-000000000000', 'd0000000-0000-0000-0000-000000000002', 'authenticated', 'authenticated', 'carlos@test.com', extensions.crypt('password123', extensions.gen_salt('bf')), now(), '{"full_name":"Carlos López"}'::jsonb,    '{"provider":"email","providers":["email"]}'::jsonb, now(), now(), '', '', '', ''),
+  ('00000000-0000-0000-0000-000000000000', 'd0000000-0000-0000-0000-000000000003', 'authenticated', 'authenticated', 'ana@test.com',    extensions.crypt('password123', extensions.gen_salt('bf')), now(), '{"full_name":"Ana Rodríguez"}'::jsonb,  '{"provider":"email","providers":["email"]}'::jsonb, now(), now(), '', '', '', ''),
 -- 3 Providers
-  ('00000000-0000-0000-0000-000000000000', 'd0000000-0000-0000-0000-000000000004', 'authenticated', 'authenticated', 'juan@test.com',    crypt('password123', gen_salt('bf')), now(), '{"full_name":"Juan Pérez"}'::jsonb,      '{"provider":"email","providers":["email"]}'::jsonb, now(), now(), '', '', '', ''),
-  ('00000000-0000-0000-0000-000000000000', 'd0000000-0000-0000-0000-000000000005', 'authenticated', 'authenticated', 'roberto@test.com', crypt('password123', gen_salt('bf')), now(), '{"full_name":"Roberto Sánchez"}'::jsonb, '{"provider":"email","providers":["email"]}'::jsonb, now(), now(), '', '', '', ''),
-  ('00000000-0000-0000-0000-000000000000', 'd0000000-0000-0000-0000-000000000006', 'authenticated', 'authenticated', 'laura@test.com',   crypt('password123', gen_salt('bf')), now(), '{"full_name":"Laura Martínez"}'::jsonb,  '{"provider":"email","providers":["email"]}'::jsonb, now(), now(), '', '', '', '');
+  ('00000000-0000-0000-0000-000000000000', 'd0000000-0000-0000-0000-000000000004', 'authenticated', 'authenticated', 'juan@test.com',    extensions.crypt('password123', extensions.gen_salt('bf')), now(), '{"full_name":"Juan Pérez"}'::jsonb,      '{"provider":"email","providers":["email"]}'::jsonb, now(), now(), '', '', '', ''),
+  ('00000000-0000-0000-0000-000000000000', 'd0000000-0000-0000-0000-000000000005', 'authenticated', 'authenticated', 'roberto@test.com', extensions.crypt('password123', extensions.gen_salt('bf')), now(), '{"full_name":"Roberto Sánchez"}'::jsonb, '{"provider":"email","providers":["email"]}'::jsonb, now(), now(), '', '', '', ''),
+  ('00000000-0000-0000-0000-000000000000', 'd0000000-0000-0000-0000-000000000006', 'authenticated', 'authenticated', 'laura@test.com',   extensions.crypt('password123', extensions.gen_salt('bf')), now(), '{"full_name":"Laura Martínez"}'::jsonb,  '{"provider":"email","providers":["email"]}'::jsonb, now(), now(), '', '', '', '');
 
 -- Auth identities (required for email login)
 INSERT INTO auth.identities (id, user_id, provider_id, identity_data, provider, last_sign_in_at, created_at, updated_at)
@@ -130,24 +131,24 @@ WHERE id = 'd0000000-0000-0000-0000-000000000006';
 -- ---------------------------------------------------------------------------
 -- Juan Pérez → Limpieza general, Limpieza profunda, Reparación de fugas, Destape de drenaje
 INSERT INTO public.provider_services (id, provider_id, service_id, base_price) VALUES
-  ('ps000000-0000-0000-0000-000000000001', 'd0000000-0000-0000-0000-000000000004', 'a1000000-0000-0000-0000-000000000001', 75000),
-  ('ps000000-0000-0000-0000-000000000002', 'd0000000-0000-0000-0000-000000000004', 'a1000000-0000-0000-0000-000000000002', 140000),
-  ('ps000000-0000-0000-0000-000000000003', 'd0000000-0000-0000-0000-000000000004', 'a1000000-0000-0000-0000-000000000004', 55000),
-  ('ps000000-0000-0000-0000-000000000004', 'd0000000-0000-0000-0000-000000000004', 'a1000000-0000-0000-0000-000000000006', 45000);
+  ('11000000-0000-0000-0000-000000000001', 'd0000000-0000-0000-0000-000000000004', 'a1000000-0000-0000-0000-000000000001', 75000),
+  ('11000000-0000-0000-0000-000000000002', 'd0000000-0000-0000-0000-000000000004', 'a1000000-0000-0000-0000-000000000002', 140000),
+  ('11000000-0000-0000-0000-000000000003', 'd0000000-0000-0000-0000-000000000004', 'a1000000-0000-0000-0000-000000000004', 55000),
+  ('11000000-0000-0000-0000-000000000004', 'd0000000-0000-0000-0000-000000000004', 'a1000000-0000-0000-0000-000000000006', 45000);
 
 -- Roberto Sánchez → Instalación eléctrica, Reparación de cortos, Pintura interior, Pintura exterior
 INSERT INTO public.provider_services (id, provider_id, service_id, base_price) VALUES
-  ('ps000000-0000-0000-0000-000000000005', 'd0000000-0000-0000-0000-000000000005', 'a1000000-0000-0000-0000-000000000007', 85000),
-  ('ps000000-0000-0000-0000-000000000006', 'd0000000-0000-0000-0000-000000000005', 'a1000000-0000-0000-0000-000000000008', 65000),
-  ('ps000000-0000-0000-0000-000000000007', 'd0000000-0000-0000-0000-000000000005', 'a1000000-0000-0000-0000-000000000010', 95000),
-  ('ps000000-0000-0000-0000-000000000008', 'd0000000-0000-0000-0000-000000000005', 'a1000000-0000-0000-0000-000000000011', 145000);
+  ('11000000-0000-0000-0000-000000000005', 'd0000000-0000-0000-0000-000000000005', 'a1000000-0000-0000-0000-000000000007', 85000),
+  ('11000000-0000-0000-0000-000000000006', 'd0000000-0000-0000-0000-000000000005', 'a1000000-0000-0000-0000-000000000008', 65000),
+  ('11000000-0000-0000-0000-000000000007', 'd0000000-0000-0000-0000-000000000005', 'a1000000-0000-0000-0000-000000000010', 95000),
+  ('11000000-0000-0000-0000-000000000008', 'd0000000-0000-0000-0000-000000000005', 'a1000000-0000-0000-0000-000000000011', 145000);
 
 -- Laura Martínez → Poda y mantenimiento, Diseño de jardín, Fumigación residencial, Fumigación comercial
 INSERT INTO public.provider_services (id, provider_id, service_id, base_price) VALUES
-  ('ps000000-0000-0000-0000-000000000009', 'd0000000-0000-0000-0000-000000000006', 'a1000000-0000-0000-0000-000000000014', 65000),
-  ('ps000000-0000-0000-0000-000000000010', 'd0000000-0000-0000-0000-000000000006', 'a1000000-0000-0000-0000-000000000015', 190000),
-  ('ps000000-0000-0000-0000-000000000011', 'd0000000-0000-0000-0000-000000000006', 'a1000000-0000-0000-0000-000000000018', 85000),
-  ('ps000000-0000-0000-0000-000000000012', 'd0000000-0000-0000-0000-000000000006', 'a1000000-0000-0000-0000-000000000019', 140000);
+  ('11000000-0000-0000-0000-000000000009', 'd0000000-0000-0000-0000-000000000006', 'a1000000-0000-0000-0000-000000000014', 65000),
+  ('11000000-0000-0000-0000-000000000010', 'd0000000-0000-0000-0000-000000000006', 'a1000000-0000-0000-0000-000000000015', 190000),
+  ('11000000-0000-0000-0000-000000000011', 'd0000000-0000-0000-0000-000000000006', 'a1000000-0000-0000-0000-000000000018', 85000),
+  ('11000000-0000-0000-0000-000000000012', 'd0000000-0000-0000-0000-000000000006', 'a1000000-0000-0000-0000-000000000019', 140000);
 
 -- ---------------------------------------------------------------------------
 -- 4. Provider availability (Lunes-Viernes 8:00-18:00, Sábado 9:00-14:00)
