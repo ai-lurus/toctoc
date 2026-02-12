@@ -9,7 +9,6 @@ CREATE TABLE public.profiles (
   experience_years INTEGER,
   avg_rating  NUMERIC(3,2) NOT NULL DEFAULT 0,
   total_reviews INTEGER NOT NULL DEFAULT 0,
-  immediate_market BOOLEAN NOT NULL DEFAULT false,
   is_active   BOOLEAN NOT NULL DEFAULT true,
   created_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
   updated_at  TIMESTAMPTZ NOT NULL DEFAULT now()

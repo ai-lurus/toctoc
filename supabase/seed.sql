@@ -110,30 +110,30 @@ UPDATE public.profiles SET role = 'client', phone = '+52 55 1234 0003' WHERE id 
 UPDATE public.profiles SET
   role = 'provider', phone = '+52 55 9876 0001',
   bio = 'Especialista en limpieza y plomería con más de 8 años de experiencia.',
-  experience_years = 8, avg_rating = 4.75, total_reviews = 32, immediate_market = true
+  experience_years = 8, avg_rating = 4.75, total_reviews = 32
 WHERE id = 'd0000000-0000-0000-0000-000000000004';
 
 UPDATE public.profiles SET
   role = 'provider', phone = '+52 55 9876 0002',
   bio = 'Electricista y pintor certificado. Trabajo de calidad garantizado.',
-  experience_years = 12, avg_rating = 4.50, total_reviews = 18, immediate_market = true
+  experience_years = 12, avg_rating = 4.50, total_reviews = 18
 WHERE id = 'd0000000-0000-0000-0000-000000000005';
 
 UPDATE public.profiles SET
   role = 'provider', phone = '+52 55 9876 0003',
   bio = 'Amante de las plantas y experta en control de plagas ecológico.',
-  experience_years = 5, avg_rating = 4.90, total_reviews = 45, immediate_market = false
+  experience_years = 5, avg_rating = 4.90, total_reviews = 45
 WHERE id = 'd0000000-0000-0000-0000-000000000006';
 
 -- ---------------------------------------------------------------------------
 -- 3. Provider services
 -- ---------------------------------------------------------------------------
--- Juan Pérez → Limpieza general, Limpieza profunda, Reparación de fugas, Destape de drenaje
-INSERT INTO public.provider_services (id, provider_id, service_id, base_price) VALUES
-  ('ps000000-0000-0000-0000-000000000001', 'd0000000-0000-0000-0000-000000000004', 'a1000000-0000-0000-0000-000000000001', 75000),
-  ('ps000000-0000-0000-0000-000000000002', 'd0000000-0000-0000-0000-000000000004', 'a1000000-0000-0000-0000-000000000002', 140000),
-  ('ps000000-0000-0000-0000-000000000003', 'd0000000-0000-0000-0000-000000000004', 'a1000000-0000-0000-0000-000000000004', 55000),
-  ('ps000000-0000-0000-0000-000000000004', 'd0000000-0000-0000-0000-000000000004', 'a1000000-0000-0000-0000-000000000006', 45000);
+-- Juan Pérez → Limpieza general (express ON), Limpieza profunda, Reparación de fugas, Destape de drenaje
+INSERT INTO public.provider_services (id, provider_id, service_id, base_price, immediate_available) VALUES
+  ('ps000000-0000-0000-0000-000000000001', 'd0000000-0000-0000-0000-000000000004', 'a1000000-0000-0000-0000-000000000001', 75000, true),
+  ('ps000000-0000-0000-0000-000000000002', 'd0000000-0000-0000-0000-000000000004', 'a1000000-0000-0000-0000-000000000002', 140000, false),
+  ('ps000000-0000-0000-0000-000000000003', 'd0000000-0000-0000-0000-000000000004', 'a1000000-0000-0000-0000-000000000004', 55000, false),
+  ('ps000000-0000-0000-0000-000000000004', 'd0000000-0000-0000-0000-000000000004', 'a1000000-0000-0000-0000-000000000006', 45000, false);
 
 -- Roberto Sánchez → Instalación eléctrica, Reparación de cortos, Pintura interior, Pintura exterior
 INSERT INTO public.provider_services (id, provider_id, service_id, base_price) VALUES

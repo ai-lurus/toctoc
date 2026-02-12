@@ -3,6 +3,7 @@ CREATE TABLE public.provider_services (
   provider_id UUID NOT NULL REFERENCES public.profiles(id) ON DELETE CASCADE,
   service_id  UUID NOT NULL REFERENCES public.services(id) ON DELETE CASCADE,
   base_price  INTEGER NOT NULL, -- centavos MXN (provider's own price)
+  immediate_available BOOLEAN NOT NULL DEFAULT false, -- express mode toggle (real-time availability)
   is_active   BOOLEAN NOT NULL DEFAULT true,
   created_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
   UNIQUE(provider_id, service_id)

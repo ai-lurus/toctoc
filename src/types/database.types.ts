@@ -24,7 +24,6 @@ export interface Database {
           experience_years: number | null;
           avg_rating: number;
           total_reviews: number;
-          immediate_market: boolean;
           is_active: boolean;
           created_at: string;
           updated_at: string;
@@ -38,7 +37,6 @@ export interface Database {
           role?: "client" | "provider" | null;
           bio?: string | null;
           experience_years?: number | null;
-          immediate_market?: boolean;
           is_active?: boolean;
         };
         Update: {
@@ -50,7 +48,6 @@ export interface Database {
           role?: "client" | "provider" | null;
           bio?: string | null;
           experience_years?: number | null;
-          immediate_market?: boolean;
           is_active?: boolean;
         };
         Relationships: [];
@@ -184,6 +181,7 @@ export interface Database {
           provider_id: string;
           service_id: string;
           base_price: number;
+          immediate_available: boolean;
           is_active: boolean;
           created_at: string;
         };
@@ -192,6 +190,7 @@ export interface Database {
           provider_id: string;
           service_id: string;
           base_price: number;
+          immediate_available?: boolean;
           is_active?: boolean;
         };
         Update: {
@@ -199,6 +198,7 @@ export interface Database {
           provider_id?: string;
           service_id?: string;
           base_price?: number;
+          immediate_available?: boolean;
           is_active?: boolean;
         };
         Relationships: [
