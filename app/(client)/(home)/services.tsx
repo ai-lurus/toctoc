@@ -28,12 +28,20 @@ export default function ServicesScreen() {
   if (isLoading) return <LoadingScreen />;
 
   return (
-    <SafeAreaView style={styles.container} edges={["top"]}>
+    <SafeAreaView style={styles.container} edges={["left", "right"]}>
       <Stack.Screen
         options={{
           headerShown: true,
           title: categoryName ?? "Servicios",
           headerTintColor: COLORS.text,
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => router.back()}
+              style={{ marginLeft: -SPACING.xs, padding: SPACING.xs }}
+            >
+              <Ionicons name="chevron-back" size={24} color={COLORS.text} />
+            </TouchableOpacity>
+          ),
         }}
       />
 
@@ -47,7 +55,7 @@ export default function ServicesScreen() {
             activeOpacity={0.7}
             onPress={() =>
               router.push({
-                pathname: "/(client)/(home)/service-config",
+                pathname: "/(client)/(home)/providers",
                 params: { serviceId: item.id, serviceName: item.name },
               })
             }
