@@ -1,8 +1,7 @@
-import React, { useState, useMemo } from "react";
+import React from "react";
 import {
     View,
     Text,
-    StyleSheet,
     TextInput,
     TouchableOpacity,
     ScrollView,
@@ -10,12 +9,13 @@ import {
 import { useLocalSearchParams, Stack, router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
-import { COLORS, SPACING, FONT_SIZE, BORDER_RADIUS } from "@/lib/constants";
+import { COLORS, SPACING, FONT_SIZE } from "@/lib/constants";
+import { styles } from "./styles";
 
 type ConfigField = {
     id: string;
     label: string;
-    type: "number" | "selector" | "date" | "time" | "text" | "multiline";
+    type: "number" | "selector";
     options?: string[];
     placeholder?: string;
 };
@@ -29,7 +29,7 @@ export default function ServiceConfigScreen() {
     }>();
 
     // Helper to generate next 7 days
-    const nextDays = useMemo(() => {
+    const nextDays = React.useMemo(() => {
         const days = [];
         const now = new Date();
         const dayNames = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
@@ -76,7 +76,7 @@ export default function ServiceConfigScreen() {
         },
     ];
 
-    const [formState, setFormState] = useState<Record<string, string>>({
+    const [formState, setFormState] = React.useState<Record<string, string>>({
         area: "80",
         rooms: "3",
         bathrooms: "2",
@@ -257,7 +257,7 @@ export default function ServiceConfigScreen() {
                     style={styles.submitButton}
                     onPress={() =>
                         router.push({
-                            pathname: "/(client)/(home)/checkout",
+                            pathname: "/(client)/(home)/providers",
                             params: {
                                 serviceId,
                                 serviceName,
@@ -266,152 +266,9 @@ export default function ServiceConfigScreen() {
                         })
                     }
                 >
-                    <Text style={styles.submitButtonText}>Continuar</Text>
+                    <Text style={styles.submitButtonText}>Confirmar y Reservar</Text>
                 </TouchableOpacity>
             </View>
         </SafeAreaView>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: COLORS.background,
-    },
-    form: {
-        flex: 1,
-    },
-    formContent: {
-        padding: SPACING.lg,
-    },
-    fieldContainer: {
-        marginBottom: SPACING.lg,
-    },
-    label: {
-        fontSize: FONT_SIZE.lg,
-        fontWeight: "600",
-        color: COLORS.text,
-        marginBottom: SPACING.md,
-    },
-    input: {
-        backgroundColor: COLORS.surface,
-        borderWidth: 1,
-        borderColor: COLORS.border,
-        borderRadius: BORDER_RADIUS.md,
-        padding: SPACING.md,
-        fontSize: FONT_SIZE.md,
-        color: COLORS.text,
-    },
-    textArea: {
-        height: 120,
-    },
-    selectorContainer: {
-        flexDirection: "row",
-        gap: SPACING.sm,
-    },
-    selectorItem: {
-        flex: 1,
-        height: 50,
-        borderRadius: BORDER_RADIUS.md,
-        borderWidth: 1,
-        borderColor: COLORS.border,
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: COLORS.surface,
-    },
-    selectorItemActive: {
-        backgroundColor: COLORS.primary,
-        borderColor: COLORS.primary,
-    },
-    selectorText: {
-        fontSize: FONT_SIZE.md,
-        color: COLORS.text,
-    },
-    selectorTextActive: {
-        color: "white",
-        fontWeight: "600",
-    },
-    dateList: {
-        gap: SPACING.sm,
-    },
-    dateCard: {
-        width: 65,
-        paddingVertical: SPACING.sm,
-        borderRadius: BORDER_RADIUS.md,
-        borderWidth: 1,
-        borderColor: COLORS.border,
-        alignItems: "center",
-        backgroundColor: COLORS.surface,
-    },
-    dateCardActive: {
-        backgroundColor: COLORS.primary,
-        borderColor: COLORS.primary,
-        // shadow for premium look
-        shadowColor: COLORS.primary,
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.3,
-        shadowRadius: 4,
-        elevation: 4,
-    },
-    dateDayName: {
-        fontSize: FONT_SIZE.xs,
-        color: COLORS.textSecondary,
-    },
-    dateDayNumber: {
-        fontSize: FONT_SIZE.lg,
-        fontWeight: "700",
-        color: COLORS.text,
-        marginVertical: 2,
-    },
-    dateMonth: {
-        fontSize: FONT_SIZE.xs,
-        color: COLORS.textSecondary,
-    },
-    dateTextActive: {
-        color: "white",
-    },
-    timeGrid: {
-        flexDirection: "row",
-        flexWrap: "wrap",
-        gap: SPACING.sm,
-    },
-    timeItem: {
-        width: "31%", // roughly 3 columns
-        height: 50,
-        borderRadius: BORDER_RADIUS.md,
-        borderWidth: 1,
-        borderColor: COLORS.border,
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: COLORS.surface,
-    },
-    timeItemActive: {
-        backgroundColor: COLORS.primary,
-        borderColor: COLORS.primary,
-    },
-    timeText: {
-        fontSize: FONT_SIZE.md,
-        color: COLORS.text,
-    },
-    timeTextActive: {
-        color: "white",
-        fontWeight: "600",
-    },
-    footer: {
-        padding: SPACING.lg,
-        backgroundColor: COLORS.background,
-        borderTopWidth: 1,
-        borderTopColor: COLORS.border,
-    },
-    submitButton: {
-        backgroundColor: COLORS.primary,
-        borderRadius: BORDER_RADIUS.md,
-        padding: SPACING.lg,
-        alignItems: "center",
-    },
-    submitButtonText: {
-        fontSize: FONT_SIZE.lg,
-        fontWeight: "600",
-        color: "white",
-    },
-});
