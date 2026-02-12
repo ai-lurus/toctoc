@@ -1,7 +1,6 @@
 import {
   View,
   Text,
-  StyleSheet,
   FlatList,
   TouchableOpacity,
 } from "react-native";
@@ -12,7 +11,8 @@ import { useSupabaseQuery } from "@/hooks/useSupabaseQuery";
 import { getServicesByCategory } from "@/services/categories";
 import { LoadingScreen } from "@/components/ui/LoadingScreen";
 import { formatCurrency } from "@/utils/format";
-import { COLORS, SPACING, FONT_SIZE, BORDER_RADIUS } from "@/lib/constants";
+import { COLORS, SPACING } from "@/lib/constants";
+import { styles } from "./styles";
 
 export default function ServicesScreen() {
   const { categoryId, categoryName } = useLocalSearchParams<{
@@ -28,12 +28,20 @@ export default function ServicesScreen() {
   if (isLoading) return <LoadingScreen />;
 
   return (
-    <SafeAreaView style={styles.container} edges={["top"]}>
+    <SafeAreaView style={styles.container} edges={["left", "right"]}>
       <Stack.Screen
         options={{
           headerShown: true,
           title: categoryName ?? "Servicios",
           headerTintColor: COLORS.text,
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => router.back()}
+              style={{ marginLeft: -SPACING.xs, padding: SPACING.xs }}
+            >
+              <Ionicons name="chevron-back" size={24} color={COLORS.text} />
+            </TouchableOpacity>
+          ),
         }}
       />
 
@@ -47,7 +55,7 @@ export default function ServicesScreen() {
             activeOpacity={0.7}
             onPress={() =>
               router.push({
-                pathname: "/(client)/(home)/service-config",
+                pathname: "/(client)/(home)/providers",
                 params: { serviceId: item.id, serviceName: item.name },
               })
             }
@@ -84,62 +92,3 @@ export default function ServicesScreen() {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.background,
-  },
-  list: {
-    padding: SPACING.md,
-  },
-  card: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: COLORS.surface,
-    borderRadius: BORDER_RADIUS.lg,
-    padding: SPACING.md,
-    marginBottom: SPACING.sm,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.06,
-    shadowRadius: 4,
-    elevation: 1,
-  },
-  iconContainer: {
-    width: 44,
-    height: 44,
-    borderRadius: BORDER_RADIUS.md,
-    backgroundColor: COLORS.primary + "15",
-    alignItems: "center",
-    justifyContent: "center",
-    marginRight: SPACING.md,
-  },
-  cardContent: {
-    flex: 1,
-  },
-  serviceName: {
-    fontSize: FONT_SIZE.md,
-    fontWeight: "600",
-    color: COLORS.text,
-  },
-  serviceDescription: {
-    fontSize: FONT_SIZE.xs,
-    color: COLORS.textSecondary,
-    marginTop: 2,
-  },
-  price: {
-    fontSize: FONT_SIZE.sm,
-    color: COLORS.primary,
-    fontWeight: "500",
-    marginTop: SPACING.xs,
-  },
-  empty: {
-    alignItems: "center",
-    padding: SPACING.xxl,
-  },
-  emptyText: {
-    fontSize: FONT_SIZE.md,
-    color: COLORS.textTertiary,
-  },
-});
