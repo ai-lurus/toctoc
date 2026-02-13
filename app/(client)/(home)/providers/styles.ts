@@ -7,8 +7,43 @@ export const styles = StyleSheet.create({
         backgroundColor: COLORS.background,
     },
     header: {
-        padding: SPACING.lg,
+        padding: SPACING.md,
         backgroundColor: COLORS.surface,
+    },
+    filtersWrapper: {
+        backgroundColor: COLORS.surface,
+        borderBottomWidth: 1,
+        borderBottomColor: "#F0F0F0",
+    },
+    filtersContainer: {
+        paddingHorizontal: SPACING.md,
+        paddingBottom: SPACING.sm,
+        flexDirection: "row",
+        alignItems: "center",
+    },
+    filterChip: {
+        flexDirection: "row",
+        alignItems: "center",
+        backgroundColor: "#F0F0F0",
+        paddingHorizontal: 12,
+        paddingVertical: 8,
+        borderRadius: 20,
+        marginRight: 8,
+        borderWidth: 1,
+        borderColor: "transparent",
+    },
+    filterChipActive: {
+        backgroundColor: "#3BB29B",
+        borderColor: "#3BB29B",
+    },
+    filterText: {
+        fontSize: 14,
+        color: "#666",
+        marginLeft: 4,
+        fontWeight: "500",
+    },
+    filterTextActive: {
+        color: "#FFF",
     },
     title: {
         fontSize: FONT_SIZE.md,
@@ -22,28 +57,32 @@ export const styles = StyleSheet.create({
     },
     list: {
         padding: SPACING.md,
+        backgroundColor: "#F2F2F2", // Slightly darker background to make cards pop
     },
     card: {
-        flexDirection: "row",
         backgroundColor: COLORS.surface,
-        borderRadius: BORDER_RADIUS.lg,
-        padding: SPACING.md,
-        marginBottom: SPACING.md,
+        borderRadius: 20, // More rounded as in image
+        padding: 20,
+        marginBottom: 20,
         shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
+        shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 3,
+        shadowRadius: 8,
+        elevation: 5,
+    },
+    cardTop: {
+        flexDirection: "row",
+        alignItems: "flex-start",
     },
     avatar: {
-        width: 70,
-        height: 70,
-        borderRadius: BORDER_RADIUS.md,
-        backgroundColor: COLORS.border,
+        width: 80,
+        height: 80,
+        borderRadius: 40, // Perfectly circular
+        backgroundColor: "#E5E5E5",
     },
     cardContent: {
         flex: 1,
-        marginLeft: SPACING.md,
+        marginLeft: 15,
     },
     nameRow: {
         flexDirection: "row",
@@ -51,47 +90,82 @@ export const styles = StyleSheet.create({
         alignItems: "center",
     },
     providerName: {
-        fontSize: FONT_SIZE.md,
+        fontSize: 18,
         fontWeight: "600",
-        color: COLORS.text,
+        color: "#1A1A1A",
     },
-    ratingBadge: {
+    statusDot: {
+        width: 12,
+        height: 12,
+        borderRadius: 6,
+        backgroundColor: "#66CC77", // Green online indicator
+    },
+    serviceRow: {
         flexDirection: "row",
         alignItems: "center",
-        backgroundColor: COLORS.background,
-        paddingHorizontal: 6,
-        paddingVertical: 2,
-        borderRadius: 12,
+        marginTop: 4,
     },
-    ratingText: {
-        fontSize: FONT_SIZE.xs,
+    serviceType: {
+        fontSize: 16,
+        color: "#888888",
+    },
+    serviceLevel: {
+        fontSize: 16,
         fontWeight: "600",
-        color: COLORS.text,
-        marginLeft: 2,
+        color: "#66BC99", // Greenish for EXPRESS
+        marginLeft: 4,
     },
-    description: {
-        fontSize: FONT_SIZE.sm,
-        color: COLORS.textSecondary,
-        marginTop: 2,
+    ratingRow: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginTop: 8,
     },
-    footer: {
+    starsContainer: {
+        flexDirection: "row",
+        marginRight: 8,
+    },
+    ratingNumber: {
+        fontSize: 14,
+        fontWeight: "700",
+        color: "#444444",
+        marginRight: 4,
+    },
+    reviewsText: {
+        fontSize: 14,
+        color: "#888888",
+    },
+    infoRow: {
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        marginTop: SPACING.sm,
+        marginTop: 12,
     },
-    reviewsText: {
-        fontSize: FONT_SIZE.xs,
-        color: COLORS.textTertiary,
+    distanceContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+    },
+    distanceText: {
+        fontSize: 14,
+        color: "#666666",
+        marginLeft: 4,
     },
     priceText: {
-        fontSize: FONT_SIZE.xs,
-        color: COLORS.textSecondary,
-    },
-    priceAmount: {
-        fontSize: FONT_SIZE.sm,
+        fontSize: 22,
         fontWeight: "700",
-        color: COLORS.primary,
+        color: "#333333",
+    },
+    selectButton: {
+        backgroundColor: "#3BB29B", // Teal/Emerald button
+        borderRadius: 15,
+        height: 50,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 20,
+    },
+    selectButtonText: {
+        color: COLORS.surface,
+        fontSize: 18,
+        fontWeight: "600",
     },
     empty: {
         alignItems: "center",
