@@ -130,14 +130,19 @@ export default function ProvidersScreen() {
                         activeOpacity={0.9}
                         onPress={() => {
                             router.push({
-                                pathname: "/(client)/(home)/service-config",
+                                pathname: "/(client)/(home)/provider/[id]",
                                 params: {
-                                    serviceId,
+                                    id: item.id,
                                     serviceName,
-                                    providerId: item.id,
-                                    providerName: item.name
+                                    providerName: item.name,
+                                    providerImage: item.image,
+                                    providerRating: String(item.rating),
+                                    providerReviews: String(item.reviews),
+                                    providerDistance: item.distance,
+                                    providerPrice: String(item.price),
+                                    providerServiceType: item.serviceType,
                                 },
-                            })
+                            });
                         }}
                     >
                         <View style={styles.cardTop}>
@@ -192,6 +197,12 @@ export default function ProvidersScreen() {
                         >
                             <Text style={styles.selectButtonText}>Ver perfil</Text>
                         </View>
+                        <Ionicons
+                            name="chevron-forward"
+                            size={20}
+                            color={COLORS.textTertiary}
+                            style={styles.chevron}
+                        />
                     </TouchableOpacity>
                 )}
                 ListEmptyComponent={

@@ -1,3 +1,4 @@
+import { Platform } from "react-native";
 import { Stack } from "expo-router";
 
 export default function HomeLayout() {
@@ -6,6 +7,7 @@ export default function HomeLayout() {
       screenOptions={{
         headerShown: false,
         animation: "slide_from_right",
+        ...(Platform.OS === "android" && { statusBarTranslucent: true }),
       }}
     />
   );

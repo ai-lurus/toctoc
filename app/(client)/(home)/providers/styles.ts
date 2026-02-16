@@ -57,11 +57,11 @@ export const styles = StyleSheet.create({
     },
     list: {
         padding: SPACING.md,
-        backgroundColor: "#F2F2F2", // Slightly darker background to make cards pop
+        backgroundColor: "#F2F2F2",
     },
     card: {
         backgroundColor: COLORS.surface,
-        borderRadius: 20, // More rounded as in image
+        borderRadius: 20,
         padding: 20,
         marginBottom: 20,
         shadowColor: "#000",
@@ -77,7 +77,7 @@ export const styles = StyleSheet.create({
     avatar: {
         width: 80,
         height: 80,
-        borderRadius: 40, // Perfectly circular
+        borderRadius: 40,
         backgroundColor: "#E5E5E5",
     },
     cardContent: {
@@ -98,7 +98,7 @@ export const styles = StyleSheet.create({
         width: 12,
         height: 12,
         borderRadius: 6,
-        backgroundColor: "#66CC77", // Green online indicator
+        backgroundColor: "#66CC77",
     },
     serviceRow: {
         flexDirection: "row",
@@ -112,7 +112,7 @@ export const styles = StyleSheet.create({
     serviceLevel: {
         fontSize: 16,
         fontWeight: "600",
-        color: "#66BC99", // Greenish for EXPRESS
+        color: "#66BC99",
         marginLeft: 4,
     },
     ratingRow: {
@@ -155,7 +155,7 @@ export const styles = StyleSheet.create({
         color: "#333333",
     },
     selectButton: {
-        backgroundColor: "#3BB29B", // Teal/Emerald button
+        backgroundColor: "#3BB29B",
         borderRadius: 15,
         height: 50,
         justifyContent: "center",
@@ -166,6 +166,9 @@ export const styles = StyleSheet.create({
         color: COLORS.surface,
         fontSize: 18,
         fontWeight: "600",
+    },
+    chevron: {
+        marginLeft: SPACING.sm,
     },
     empty: {
         alignItems: "center",
