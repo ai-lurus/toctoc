@@ -257,10 +257,12 @@ export default function ServiceConfigScreen() {
                     style={styles.submitButton}
                     onPress={() =>
                         router.push({
-                            pathname: "/(client)/(home)/providers",
+                            pathname: "/(client)/(home)/payment-method",
                             params: {
                                 serviceId,
                                 serviceName,
+                                providerId,
+                                providerName,
                                 config: JSON.stringify(formState),
                             },
                         })
