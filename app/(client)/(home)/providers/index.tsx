@@ -14,9 +14,9 @@ import { COLORS } from "@/lib/constants";
 import { styles } from "./styles";
 
 export default function ProvidersScreen() {
-    const { serviceId, serviceName } = useLocalSearchParams<{
-        serviceId: string;
-        serviceName: string;
+    const { categoryId, categoryName } = useLocalSearchParams<{
+        categoryId: string;
+        categoryName: string;
     }>();
 
     const [sortBy, setSortBy] = useState<"price_asc" | "price_desc" | null>(null);
@@ -89,7 +89,7 @@ export default function ProvidersScreen() {
 
             <View style={styles.header}>
                 <Text style={styles.title}>Selecciona un proveedor para</Text>
-                <Text style={styles.serviceName}>{serviceName}</Text>
+                <Text style={styles.serviceName}>{categoryName}</Text>
             </View>
 
             <View style={styles.filtersWrapper}>
@@ -130,6 +130,7 @@ export default function ProvidersScreen() {
                         activeOpacity={0.9}
                         onPress={() => {
                             router.push({
+<<<<<<< HEAD
                                 pathname: "/(client)/(home)/provider/[id]",
                                 params: {
                                     id: item.id,
@@ -141,6 +142,14 @@ export default function ProvidersScreen() {
                                     providerDistance: item.distance,
                                     providerPrice: String(item.price),
                                     providerServiceType: item.serviceType,
+=======
+                                pathname: "/(client)/(home)/services",
+                                params: {
+                                    categoryId,
+                                    categoryName,
+                                    providerId: item.id,
+                                    providerName: item.name
+>>>>>>> 68b1c5308a835b2d9869950260f1d48ebd162195
                                 },
                             });
                         }}

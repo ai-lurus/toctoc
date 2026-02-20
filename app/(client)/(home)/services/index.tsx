@@ -15,9 +15,11 @@ import { COLORS, SPACING } from "@/lib/constants";
 import { styles } from "./styles";
 
 export default function ServicesScreen() {
-  const { categoryId, categoryName } = useLocalSearchParams<{
+  const { categoryId, categoryName, providerId, providerName } = useLocalSearchParams<{
     categoryId: string;
     categoryName: string;
+    providerId: string;
+    providerName: string;
   }>();
 
   const { data: services, isLoading } = useSupabaseQuery(
@@ -54,8 +56,15 @@ export default function ServicesScreen() {
             activeOpacity={0.7}
             onPress={() =>
               router.push({
-                pathname: "/(client)/(home)/providers",
-                params: { serviceId: item.id, serviceName: item.name },
+                pathname: "/(client)/(home)/service-config",
+                params: {
+                  categoryId,
+                  categoryName,
+                  providerId,
+                  providerName,
+                  serviceId: item.id,
+                  serviceName: item.name
+                },
               })
             }
           >

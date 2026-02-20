@@ -39,7 +39,7 @@ export default function ClientHomeScreen() {
             category={item}
             onPress={() =>
               router.push({
-                pathname: "/(client)/(home)/services",
+                pathname: "/(client)/(home)/providers",
                 params: { categoryId: item.id, categoryName: item.name },
               })
             }
