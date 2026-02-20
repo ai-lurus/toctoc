@@ -11,15 +11,16 @@ export const styles = StyleSheet.create({
     },
     formContent: {
         padding: SPACING.lg,
+        paddingBottom: 100, // accommodate pricing card
     },
     fieldContainer: {
         marginBottom: SPACING.lg,
     },
     label: {
-        fontSize: FONT_SIZE.lg,
-        fontWeight: "600",
+        fontSize: FONT_SIZE.md,
+        fontWeight: "500",
         color: COLORS.text,
-        marginBottom: SPACING.md,
+        marginBottom: SPACING.sm,
     },
     input: {
         backgroundColor: COLORS.surface,
@@ -47,10 +48,6 @@ export const styles = StyleSheet.create({
         justifyContent: "center",
         backgroundColor: COLORS.surface,
     },
-    selectorItemActive: {
-        backgroundColor: COLORS.primary,
-        borderColor: COLORS.primary,
-    },
     selectorText: {
         fontSize: FONT_SIZE.md,
         color: COLORS.text,
@@ -59,85 +56,51 @@ export const styles = StyleSheet.create({
         color: "white",
         fontWeight: "600",
     },
-    dateList: {
-        gap: SPACING.sm,
-    },
-    dateCard: {
-        width: 65,
-        paddingVertical: SPACING.sm,
-        borderRadius: BORDER_RADIUS.md,
-        borderWidth: 1,
-        borderColor: COLORS.border,
-        alignItems: "center",
-        backgroundColor: COLORS.surface,
-    },
-    dateCardActive: {
+    selectorItemActive: {
         backgroundColor: COLORS.primary,
         borderColor: COLORS.primary,
-        // shadow for premium look
-        shadowColor: COLORS.primary,
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.3,
-        shadowRadius: 4,
-        elevation: 4,
     },
-    dateDayName: {
-        fontSize: FONT_SIZE.xs,
-        color: COLORS.textSecondary,
+    priceCard: {
+        backgroundColor: COLORS.primary,
+        borderRadius: BORDER_RADIUS.lg,
+        padding: SPACING.lg,
+        marginTop: SPACING.xl,
     },
-    dateDayNumber: {
-        fontSize: FONT_SIZE.lg,
+    priceLabel: {
+        color: "rgba(255, 255, 255, 0.8)",
+        fontSize: FONT_SIZE.sm,
+        marginBottom: 4,
+    },
+    priceValue: {
+        color: "white",
+        fontSize: FONT_SIZE.xxl,
         fontWeight: "700",
-        color: COLORS.text,
-        marginVertical: 2,
     },
-    dateMonth: {
-        fontSize: FONT_SIZE.xs,
-        color: COLORS.textSecondary,
-    },
-    dateTextActive: {
-        color: "white",
-    },
-    timeGrid: {
+    priceNoteContainer: {
         flexDirection: "row",
-        flexWrap: "wrap",
-        gap: SPACING.sm,
-    },
-    timeItem: {
-        width: "31%", // roughly 3 columns
-        height: 50,
-        borderRadius: BORDER_RADIUS.md,
-        borderWidth: 1,
-        borderColor: COLORS.border,
         alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: COLORS.surface,
+        marginTop: SPACING.md,
+        paddingTop: SPACING.md,
+        borderTopWidth: 1,
+        borderTopColor: "rgba(255, 255, 255, 0.2)",
     },
-    timeItemActive: {
-        backgroundColor: COLORS.primary,
-        borderColor: COLORS.primary,
-    },
-    timeText: {
-        fontSize: FONT_SIZE.md,
-        color: COLORS.text,
-    },
-    timeTextActive: {
-        color: "white",
-        fontWeight: "600",
+    priceNote: {
+        color: "rgba(255, 255, 255, 0.7)",
+        fontSize: 10,
+        marginLeft: SPACING.xs,
+        flex: 1,
     },
     footer: {
         padding: SPACING.lg,
-        backgroundColor: COLORS.background,
-        borderTopWidth: 1,
-        borderTopColor: COLORS.border,
+        backgroundColor: "#F9FAFB",
     },
-    submitButton: {
-        backgroundColor: COLORS.primary,
+    searchButton: {
+        backgroundColor: COLORS.success,
         borderRadius: BORDER_RADIUS.md,
         padding: SPACING.lg,
         alignItems: "center",
     },
-    submitButtonText: {
+    searchButtonText: {
         fontSize: FONT_SIZE.lg,
         fontWeight: "600",
         color: "white",

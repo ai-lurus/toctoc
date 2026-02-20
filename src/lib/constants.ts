@@ -1,18 +1,18 @@
 export const COLORS = {
-  primary: "#4F46E5",
-  primaryLight: "#818CF8",
-  primaryDark: "#3730A3",
-  secondary: "#F59E0B",
-  secondaryLight: "#FCD34D",
+  primary: "#4A89F3",    // Design Blue
+  primaryLight: "#EBF2FF",
+  primaryDark: "#3367D6",
+  secondary: "#FFB400",  // Star Yellow
+  secondaryLight: "#FFF4CC",
   background: "#F9FAFB",
   surface: "#FFFFFF",
   text: "#111827",
   textSecondary: "#6B7280",
   textTertiary: "#9CA3AF",
   border: "#E5E7EB",
-  error: "#EF4444",
-  success: "#10B981",
-  warning: "#F59E0B",
+  error: "#FF5252",      // Cancel Red
+  success: "#10CE8A",    // Design Green (Buttons)
+  warning: "#FFC107",
 } as const;
 
 export const SPACING = {
