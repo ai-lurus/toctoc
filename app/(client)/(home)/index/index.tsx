@@ -3,14 +3,17 @@ import {
   Text,
   FlatList,
   RefreshControl,
+  TouchableOpacity,
 } from "react-native";
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Ionicons } from "@expo/vector-icons";
 import { useAuthStore } from "@/store/authStore";
 import { useSupabaseQuery } from "@/hooks/useSupabaseQuery";
 import { getCategories } from "@/services/categories";
 import { CategoryCard } from "@/components/cards/CategoryCard";
 import { LoadingScreen } from "@/components/ui/LoadingScreen";
+import { COLORS } from "@/lib/constants";
 import { styles } from "./styles";
 
 export default function ClientHomeScreen() {
@@ -21,19 +24,57 @@ export default function ClientHomeScreen() {
     return <LoadingScreen />;
   }
 
-  return (
-    <SafeAreaView style={styles.container} edges={["top"]}>
+  const renderHeader = () => (
+    <>
       <View style={styles.header}>
-        <Text style={styles.greeting}>
-          Hola, {profile?.full_name?.split(" ")[0] ?? ""}
-        </Text>
-        <Text style={styles.subtitle}>¿Qué servicio necesitas hoy?</Text>
+        <View style={styles.headerText}>
+          <Text style={styles.greeting}>
+            Buenas noches, {profile?.full_name?.split(" ")[0] ?? "María"}
+          </Text>
+          <Text style={styles.subtitle}>¿Qué servicio necesitas hoy?</Text>
+        </View>
+        <TouchableOpacity style={styles.notificationContainer}>
+          <Ionicons name="notifications" size={24} color={COLORS.secondary} />
+          <View style={styles.badge}>
+            <Text style={styles.badgeText}>2</Text>
+          </View>
+        </TouchableOpacity>
       </View>
 
+      <View style={styles.statusCard}>
+        <View style={styles.statusHeader}>
+          <View style={styles.statusDot} />
+          <Text style={styles.statusLabel}>Servicio en proceso</Text>
+        </View>
+        <Text style={styles.statusTitle}>Limpieza general</Text>
+        <Text style={styles.statusSubtitle}>El proveedor está en camino • 15 min</Text>
+        <TouchableOpacity style={styles.statusButton}>
+          <Text style={styles.statusButtonText}>Ver detalles del servicio</Text>
+        </TouchableOpacity>
+      </View>
+
+      <TouchableOpacity style={styles.expressBanner}>
+        <View style={styles.expressContent}>
+          <Ionicons name="flash" size={24} color="white" />
+          <View style={styles.expressTextContainer}>
+            <Text style={styles.expressTitle}>Servicio express</Text>
+            <Text style={styles.expressSubtitle}>Proveedor disponible ahora</Text>
+          </View>
+        </View>
+        <Ionicons name="chevron-forward" size={20} color="white" />
+      </TouchableOpacity>
+
+      <Text style={styles.sectionTitle}>Categorías de servicio</Text>
+    </>
+  );
+
+  return (
+    <SafeAreaView style={styles.container} edges={["top"]}>
       <FlatList
         data={categories}
         keyExtractor={(item) => item.id}
         numColumns={2}
+        ListHeaderComponent={renderHeader}
         renderItem={({ item }) => (
           <CategoryCard
             category={item}

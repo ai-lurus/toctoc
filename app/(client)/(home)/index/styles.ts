@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { COLORS, SPACING, FONT_SIZE } from "@/lib/constants";
+import { COLORS, SPACING, FONT_SIZE, BORDER_RADIUS } from "@/lib/constants";
 
 export const styles = StyleSheet.create({
     container: {
@@ -10,6 +10,34 @@ export const styles = StyleSheet.create({
         paddingHorizontal: SPACING.lg,
         paddingTop: SPACING.md,
         paddingBottom: SPACING.md,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "flex-start",
+    },
+    headerText: {
+        flex: 1,
+    },
+    notificationContainer: {
+        position: "relative",
+        padding: SPACING.xs,
+    },
+    badge: {
+        position: "absolute",
+        top: 0,
+        right: 0,
+        backgroundColor: COLORS.error,
+        width: 16,
+        height: 16,
+        borderRadius: 8,
+        justifyContent: "center",
+        alignItems: "center",
+        borderWidth: 2,
+        borderColor: COLORS.surface,
+    },
+    badgeText: {
+        color: "white",
+        fontSize: 8,
+        fontWeight: "700",
     },
     greeting: {
         fontSize: FONT_SIZE.xl,
@@ -21,8 +49,98 @@ export const styles = StyleSheet.create({
         color: COLORS.textSecondary,
         marginTop: SPACING.xs,
     },
+    statusCard: {
+        backgroundColor: COLORS.surface,
+        borderRadius: BORDER_RADIUS.lg,
+        padding: SPACING.md,
+        marginHorizontal: SPACING.lg,
+        marginTop: SPACING.md,
+        borderWidth: 1,
+        borderColor: COLORS.primaryLight,
+        shadowColor: COLORS.primary,
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.1,
+        shadowRadius: 8,
+        elevation: 4,
+    },
+    statusHeader: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginBottom: SPACING.sm,
+    },
+    statusDot: {
+        width: 8,
+        height: 8,
+        borderRadius: 4,
+        backgroundColor: COLORS.success,
+        marginRight: SPACING.xs,
+    },
+    statusLabel: {
+        fontSize: 10,
+        fontWeight: "700",
+        color: COLORS.success,
+        textTransform: "uppercase",
+        letterSpacing: 0.5,
+    },
+    statusTitle: {
+        fontSize: FONT_SIZE.lg,
+        fontWeight: "700",
+        color: COLORS.text,
+        marginBottom: 4,
+    },
+    statusSubtitle: {
+        fontSize: FONT_SIZE.xs,
+        color: COLORS.textSecondary,
+        marginBottom: SPACING.md,
+    },
+    statusButton: {
+        backgroundColor: COLORS.primary,
+        paddingVertical: SPACING.sm,
+        borderRadius: BORDER_RADIUS.md,
+        alignItems: "center",
+    },
+    statusButtonText: {
+        color: "white",
+        fontWeight: "600",
+        fontSize: FONT_SIZE.sm,
+    },
+    expressBanner: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        backgroundColor: COLORS.success,
+        borderRadius: BORDER_RADIUS.lg,
+        padding: SPACING.md,
+        marginHorizontal: SPACING.lg,
+        marginTop: SPACING.lg,
+    },
+    expressContent: {
+        flexDirection: "row",
+        alignItems: "center",
+    },
+    expressTextContainer: {
+        marginLeft: SPACING.sm,
+    },
+    expressTitle: {
+        color: "white",
+        fontSize: FONT_SIZE.lg,
+        fontWeight: "700",
+    },
+    expressSubtitle: {
+        color: "rgba(255, 255, 255, 0.8)",
+        fontSize: 10,
+    },
+    sectionTitle: {
+        fontSize: FONT_SIZE.md,
+        fontWeight: "700",
+        color: COLORS.text,
+        marginHorizontal: SPACING.lg,
+        marginTop: SPACING.xl,
+        marginBottom: SPACING.sm,
+    },
     grid: {
-        padding: SPACING.sm,
+        paddingHorizontal: SPACING.lg - SPACING.xs,
+        paddingBottom: SPACING.xl,
     },
     empty: {
         flex: 1,
