@@ -10,6 +10,7 @@ import { useLocalSearchParams, Stack, router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS, SPACING, FONT_SIZE } from "@/lib/constants";
+import { getStandardHeaderOptions } from "@/lib/navigation";
 import { styles } from "./styles";
 
 type ConfigField = {
@@ -28,26 +29,6 @@ export default function ServiceConfigScreen() {
         providerName: string;
     }>();
 
-    // Helper to generate next 7 days
-    const nextDays = React.useMemo(() => {
-        const days = [];
-        const now = new Date();
-        const dayNames = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
-        const monthNames = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
-
-        for (let i = 0; i < 7; i++) {
-            const date = new Date();
-            date.setDate(now.getDate() + i);
-            days.push({
-                fullDate: date.toISOString().split("T")[0],
-                dayName: dayNames[date.getDay()],
-                dayNumber: date.getDate().toString(),
-                month: monthNames[date.getMonth()],
-            });
-        }
-        return days;
-    }, []);
-
     // Mocked configuration fields
     const configFields: ConfigField[] = [
         {
@@ -60,7 +41,7 @@ export default function ServiceConfigScreen() {
             id: "rooms",
             label: "Habitaciones",
             type: "selector",
-            options: ["1", "2", "3", "4", "5"],
+            options: ["1", "2", "3", "4"],
         },
         {
             id: "bathrooms",
@@ -72,7 +53,7 @@ export default function ServiceConfigScreen() {
             id: "hours",
             label: "Horas estimadas",
             type: "selector",
-            options: ["2h", "3h", "4h", "5h", "6h"],
+            options: ["2h", "3h", "4h", "5h"],
         },
     ];
 
@@ -81,9 +62,6 @@ export default function ServiceConfigScreen() {
         rooms: "3",
         bathrooms: "2",
         hours: "3h",
-        selectedDate: nextDays[0].fullDate,
-        selectedTime: "10:00",
-        address: "",
         notes: "",
     });
 
@@ -139,125 +117,51 @@ export default function ServiceConfigScreen() {
         }
     };
 
-    const timeSlots = ["08:00", "10:00", "12:00", "14:00", "16:00", "18:00"];
-
     return (
         <SafeAreaView style={styles.container} edges={["left", "right"]}>
             <Stack.Screen
-                options={{
-                    headerShown: true,
-                    headerTitle: () => (
-                        <View>
-                            <Text style={{ fontSize: FONT_SIZE.lg, fontWeight: "700", color: COLORS.text }}>
-                                Configurar servicio
-                            </Text>
-                            <Text style={{ fontSize: FONT_SIZE.sm, color: COLORS.textSecondary }}>
-                                {serviceName}
-                            </Text>
-                        </View>
-                    ),
-                    headerLeft: () => (
-                        <TouchableOpacity
-                            onPress={() => router.back()}
-                            style={{ marginLeft: -SPACING.xs, padding: SPACING.xs }}
-                        >
-                            <Ionicons name="chevron-back" size={24} color={COLORS.text} />
-                        </TouchableOpacity>
-                    ),
-                    headerTintColor: COLORS.text,
-                }}
+                options={getStandardHeaderOptions({
+                    title: "Configurar servicio",
+                    subtitle: serviceName || "Limpieza profunda",
+                })}
             />
 
             <ScrollView style={styles.form} contentContainerStyle={styles.formContent}>
                 {/* Fixed configurations */}
                 {configFields.map(renderField)}
 
-                {/* Day Selection */}
-                <View style={styles.fieldContainer}>
-                    <Text style={styles.label}>Selecciona un día</Text>
-                    <ScrollView
-                        horizontal
-                        showsHorizontalScrollIndicator={false}
-                        contentContainerStyle={styles.dateList}
-                    >
-                        {nextDays.map((date) => (
-                            <TouchableOpacity
-                                key={date.fullDate}
-                                style={[
-                                    styles.dateCard,
-                                    formState.selectedDate === date.fullDate && styles.dateCardActive,
-                                ]}
-                                onPress={() => handleInputChange("selectedDate", date.fullDate)}
-                            >
-                                <Text style={[styles.dateDayName, formState.selectedDate === date.fullDate && styles.dateTextActive]}>
-                                    {date.dayName}
-                                </Text>
-                                <Text style={[styles.dateDayNumber, formState.selectedDate === date.fullDate && styles.dateTextActive]}>
-                                    {date.dayNumber}
-                                </Text>
-                                <Text style={[styles.dateMonth, formState.selectedDate === date.fullDate && styles.dateTextActive]}>
-                                    {date.month}
-                                </Text>
-                            </TouchableOpacity>
-                        ))}
-                    </ScrollView>
-                </View>
-
-                {/* Time Selection */}
-                <View style={styles.fieldContainer}>
-                    <Text style={styles.label}>Horario</Text>
-                    <View style={styles.timeGrid}>
-                        {timeSlots.map((slot) => (
-                            <TouchableOpacity
-                                key={slot}
-                                style={[
-                                    styles.timeItem,
-                                    formState.selectedTime === slot && styles.timeItemActive,
-                                ]}
-                                onPress={() => handleInputChange("selectedTime", slot)}
-                            >
-                                <Text style={[styles.timeText, formState.selectedTime === slot && styles.timeTextActive]}>
-                                    {slot}
-                                </Text>
-                            </TouchableOpacity>
-                        ))}
-                    </View>
-                </View>
-
-                {/* Address Input */}
-                <View style={styles.fieldContainer}>
-                    <Text style={styles.label}>Dirección</Text>
-                    <TextInput
-                        style={styles.input}
-                        value={formState.address}
-                        onChangeText={(val) => handleInputChange("address", val)}
-                        placeholder="Ingresa tu dirección"
-                        placeholderTextColor={COLORS.textTertiary}
-                    />
-                </View>
-
                 {/* Notes Input */}
                 <View style={styles.fieldContainer}>
-                    <Text style={styles.label}>Notas adicionales</Text>
+                    <Text style={styles.label}>Notas adicionales <Text style={{ fontWeight: '400', fontSize: 12, color: COLORS.textSecondary }}>(opcional)</Text></Text>
                     <TextInput
                         style={[styles.input, styles.textArea]}
                         value={formState.notes}
                         onChangeText={(val) => handleInputChange("notes", val)}
-                        placeholder="Comparte más especificaciones con tu proveedor(a) de servicio"
+                        placeholder="Ej: Tengo dos mascotas, por favor traer productos hipoalergénicos"
                         placeholderTextColor={COLORS.textTertiary}
                         multiline
                         numberOfLines={4}
                         textAlignVertical="top"
                     />
                 </View>
+
+                {/* Estimated Price Card */}
+                <View style={styles.priceCard}>
+                    <Text style={styles.priceLabel}>Precio estimado</Text>
+                    <Text style={styles.priceValue}>$290</Text>
+                    <View style={styles.priceNoteContainer}>
+                        <Ionicons name="information-circle" size={16} color="rgba(255, 255, 255, 0.6)" />
+                        <Text style={styles.priceNote}>El pago se realiza solo si el proveedor acepta</Text>
+                    </View>
+                </View>
             </ScrollView>
 
             <View style={styles.footer}>
                 <TouchableOpacity
-                    style={styles.submitButton}
+                    style={styles.searchButton}
                     onPress={() =>
                         router.push({
-                            pathname: "/(client)/(home)/payment-method",
+                            pathname: "/(client)/(home)/confirmation",
                             params: {
                                 serviceId,
                                 serviceName,
@@ -268,7 +172,7 @@ export default function ServiceConfigScreen() {
                         })
                     }
                 >
-                    <Text style={styles.submitButtonText}>Confirmar y Reservar</Text>
+                    <Text style={styles.searchButtonText}>Buscar proveedor</Text>
                 </TouchableOpacity>
             </View>
         </SafeAreaView>

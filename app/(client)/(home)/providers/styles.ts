@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Platform } from "react-native";
 import { COLORS, SPACING, FONT_SIZE, BORDER_RADIUS } from "@/lib/constants";
 
 export const styles = StyleSheet.create({
@@ -17,155 +17,138 @@ export const styles = StyleSheet.create({
     },
     filtersContainer: {
         paddingHorizontal: SPACING.md,
-        paddingBottom: SPACING.sm,
+        paddingVertical: 8,
         flexDirection: "row",
         alignItems: "center",
     },
     filterChip: {
-        flexDirection: "row",
-        alignItems: "center",
-        backgroundColor: "#F0F0F0",
-        paddingHorizontal: 12,
-        paddingVertical: 8,
-        borderRadius: 20,
-        marginRight: 8,
+        backgroundColor: COLORS.surface,
+        paddingHorizontal: 16,
+        paddingVertical: 10,
+        borderRadius: BORDER_RADIUS.lg,
+        marginRight: 10,
         borderWidth: 1,
-        borderColor: "transparent",
+        borderColor: COLORS.border,
+        minWidth: 120,
+        alignItems: "center",
     },
     filterChipActive: {
-        backgroundColor: "#3BB29B",
-        borderColor: "#3BB29B",
+        backgroundColor: COLORS.primary,
+        borderColor: COLORS.primary,
     },
     filterText: {
-        fontSize: 14,
-        color: "#666",
-        marginLeft: 4,
-        fontWeight: "500",
+        fontSize: FONT_SIZE.sm,
+        color: COLORS.primary,
+        fontWeight: "600",
     },
     filterTextActive: {
-        color: "#FFF",
+        color: "white",
     },
     title: {
         fontSize: FONT_SIZE.md,
         color: COLORS.textSecondary,
     },
     serviceName: {
-        fontSize: FONT_SIZE.xl,
+        fontSize: FONT_SIZE.xs,
+        color: COLORS.textSecondary,
+        marginTop: 2,
+    },
+    providersCount: {
+        fontSize: FONT_SIZE.lg,
         fontWeight: "700",
         color: COLORS.text,
         marginTop: 4,
     },
     list: {
         padding: SPACING.md,
-        backgroundColor: "#F2F2F2", // Slightly darker background to make cards pop
+        backgroundColor: COLORS.background,
     },
     card: {
         backgroundColor: COLORS.surface,
-        borderRadius: 20, // More rounded as in image
-        padding: 20,
-        marginBottom: 20,
+        borderRadius: BORDER_RADIUS.lg,
+        padding: 16,
+        marginBottom: 16,
         shadowColor: "#000",
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.1,
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.05,
         shadowRadius: 8,
-        elevation: 5,
+        elevation: 2,
+        flexDirection: "row",
+        alignItems: "center",
     },
     cardTop: {
         flexDirection: "row",
         alignItems: "flex-start",
     },
     avatar: {
-        width: 80,
-        height: 80,
-        borderRadius: 40, // Perfectly circular
-        backgroundColor: "#E5E5E5",
+        width: 64,
+        height: 64,
+        borderRadius: 32,
     },
     cardContent: {
         flex: 1,
-        marginLeft: 15,
-    },
-    nameRow: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
+        marginLeft: 16,
     },
     providerName: {
         fontSize: 18,
-        fontWeight: "600",
-        color: "#1A1A1A",
-    },
-    statusDot: {
-        width: 12,
-        height: 12,
-        borderRadius: 6,
-        backgroundColor: "#66CC77", // Green online indicator
-    },
-    serviceRow: {
-        flexDirection: "row",
-        alignItems: "center",
-        marginTop: 4,
+        fontWeight: "700",
+        color: COLORS.text,
     },
     serviceType: {
-        fontSize: 16,
-        color: "#888888",
-    },
-    serviceLevel: {
-        fontSize: 16,
-        fontWeight: "600",
-        color: "#66BC99", // Greenish for EXPRESS
-        marginLeft: 4,
+        fontSize: FONT_SIZE.sm,
+        color: COLORS.textSecondary,
+        marginTop: 2,
     },
     ratingRow: {
         flexDirection: "row",
         alignItems: "center",
-        marginTop: 8,
-    },
-    starsContainer: {
-        flexDirection: "row",
-        marginRight: 8,
+        marginTop: 6,
     },
     ratingNumber: {
-        fontSize: 14,
+        fontSize: FONT_SIZE.sm,
         fontWeight: "700",
-        color: "#444444",
-        marginRight: 4,
-    },
-    reviewsText: {
-        fontSize: 14,
-        color: "#888888",
-    },
-    infoRow: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        marginTop: 12,
-    },
-    distanceContainer: {
-        flexDirection: "row",
-        alignItems: "center",
-    },
-    distanceText: {
-        fontSize: 14,
-        color: "#666666",
+        color: COLORS.text,
         marginLeft: 4,
     },
-    priceText: {
-        fontSize: 22,
-        fontWeight: "700",
-        color: "#333333",
+    reviewsText: {
+        fontSize: 12,
+        color: COLORS.textTertiary,
+        marginLeft: 4,
     },
-    selectButton: {
-        backgroundColor: "#3BB29B", // Teal/Emerald button
-        borderRadius: 15,
-        height: 50,
-        justifyContent: "center",
+    distanceRow: {
+        flexDirection: "row",
         alignItems: "center",
-        marginTop: 20,
+        marginTop: 6,
     },
-    selectButtonText: {
-        color: COLORS.surface,
-        fontSize: 18,
-        fontWeight: "600",
+    distanceText: {
+        fontSize: 12,
+        color: COLORS.textSecondary,
+        marginLeft: 4,
+    },
+    priceContainer: {
+        alignItems: "flex-end",
+        justifyContent: "center",
+        marginLeft: 8,
+    },
+    priceText: {
+        fontSize: 20,
+        fontWeight: "700",
+        color: COLORS.primary,
+        marginBottom: 4,
+    },
+    priceUnit: {
+        fontSize: 12,
+        fontWeight: "400",
+        color: COLORS.primary,
+    },
+    chevronContainer: {
+        marginLeft: 12,
+    },
+    footer: {
+        padding: SPACING.md,
+        backgroundColor: COLORS.surface,
+        borderTopWidth: 1,
+        borderTopColor: COLORS.border,
     },
     empty: {
         alignItems: "center",
