@@ -101,13 +101,19 @@ export default function ProvidersScreen() {
                         activeOpacity={0.9}
                         onPress={() => {
                             router.push({
-                                pathname: "/(client)/(home)/service-config",
+                                pathname: "/(client)/(home)/provider/[id]",
                                 params: {
-                                    providerId: item.id,
+                                    id: item.id,
+                                    serviceName,
                                     providerName: item.name,
-                                    serviceName: item.serviceType
+                                    providerImage: item.image,
+                                    providerRating: String(item.rating),
+                                    providerReviews: String(item.reviews),
+                                    providerDistance: item.distance,
+                                    providerPrice: String(item.price),
+                                    providerServiceType: item.serviceType,
                                 },
-                            })
+                            });
                         }}
                     >
                         <TouchableOpacity
@@ -146,22 +152,12 @@ export default function ProvidersScreen() {
                                 ${item.price}<Text style={styles.priceUnit}>/hr</Text>
                             </Text>
                         </View>
-
-                        <TouchableOpacity
-                            style={styles.chevronContainer}
-                            onPress={() => {
-                                router.push({
-                                    pathname: "/(client)/(home)/provider-profile",
-                                    params: {
-                                        providerId: item.id,
-                                        providerName: item.name,
-                                        serviceName: item.serviceType
-                                    },
-                                })
-                            }}
-                        >
-                            <Ionicons name="chevron-forward" size={24} color={COLORS.primary} />
-                        </TouchableOpacity>
+                        <Ionicons
+                            name="chevron-forward"
+                            size={20}
+                            color={COLORS.textTertiary}
+                            style={styles.chevron}
+                        />
                     </TouchableOpacity>
                 )}
                 ListEmptyComponent={

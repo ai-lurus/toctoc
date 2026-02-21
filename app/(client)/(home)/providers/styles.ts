@@ -61,13 +61,13 @@ export const styles = StyleSheet.create({
     },
     list: {
         padding: SPACING.md,
-        backgroundColor: COLORS.background,
+        backgroundColor: "#F2F2F2",
     },
     card: {
         backgroundColor: COLORS.surface,
-        borderRadius: BORDER_RADIUS.lg,
-        padding: 16,
-        marginBottom: 16,
+        borderRadius: 20,
+        padding: 20,
+        marginBottom: 20,
         shadowColor: "#000",
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.05,
@@ -81,9 +81,10 @@ export const styles = StyleSheet.create({
         alignItems: "flex-start",
     },
     avatar: {
-        width: 64,
-        height: 64,
-        borderRadius: 32,
+        width: 80,
+        height: 80,
+        borderRadius: 40,
+        backgroundColor: "#E5E5E5",
     },
     cardContent: {
         flex: 1,
@@ -91,13 +92,29 @@ export const styles = StyleSheet.create({
     },
     providerName: {
         fontSize: 18,
-        fontWeight: "700",
-        color: COLORS.text,
+        fontWeight: "600",
+        color: "#1A1A1A",
+    },
+    statusDot: {
+        width: 12,
+        height: 12,
+        borderRadius: 6,
+        backgroundColor: "#66CC77",
+    },
+    serviceRow: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginTop: 4,
     },
     serviceType: {
-        fontSize: FONT_SIZE.sm,
-        color: COLORS.textSecondary,
-        marginTop: 2,
+        fontSize: 16,
+        color: "#888888",
+    },
+    serviceLevel: {
+        fontSize: 16,
+        fontWeight: "600",
+        color: "#66BC99",
+        marginLeft: 4,
     },
     ratingRow: {
         flexDirection: "row",
@@ -136,10 +153,13 @@ export const styles = StyleSheet.create({
         color: COLORS.primary,
         marginBottom: 4,
     },
-    priceUnit: {
-        fontSize: 12,
-        fontWeight: "400",
-        color: COLORS.primary,
+    selectButton: {
+        backgroundColor: "#3BB29B",
+        borderRadius: 15,
+        height: 50,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 20,
     },
     chevronContainer: {
         marginLeft: 12,
@@ -149,6 +169,9 @@ export const styles = StyleSheet.create({
         backgroundColor: COLORS.surface,
         borderTopWidth: 1,
         borderTopColor: COLORS.border,
+    },
+    chevron: {
+        marginLeft: SPACING.sm,
     },
     empty: {
         alignItems: "center",
