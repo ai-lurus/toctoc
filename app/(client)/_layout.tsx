@@ -33,15 +33,6 @@ export default function ClientLayout() {
         }}
       />
       <Tabs.Screen
-        name="(chat)"
-        options={{
-          title: "Chat",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="chatbubbles" size={size} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
         name="(profile)"
         options={{
           title: "Perfil",
