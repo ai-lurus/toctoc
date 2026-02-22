@@ -6,19 +6,26 @@ import {
   Platform,
   ScrollView,
   Alert,
+  TouchableOpacity,
 } from "react-native";
-import { Link, router } from "expo-router";
+import { Link, router, useLocalSearchParams } from "expo-router";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Ionicons } from "@expo/vector-icons";
 import { useAuthStore } from "@/store/authStore";
 import { registerSchema, type RegisterFormData } from "@/utils/validation";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
-import { COLORS, SPACING, FONT_SIZE } from "@/lib/constants";
+import { COLORS, SPACING, FONT_SIZE, BORDER_RADIUS } from "@/lib/constants";
+import type { UserRole } from "@/types/enums";
+import { useState } from "react";
 
 export default function RegisterScreen() {
-  const { signUp, isLoading } = useAuthStore();
+  const { role } = useLocalSearchParams<{ role: string }>();
+  const { signUp, setRole, isLoading } = useAuthStore();
+  const [termsAccepted, setTermsAccepted] = useState(false);
+
   const {
     control,
     handleSubmit,
@@ -29,21 +36,38 @@ export default function RegisterScreen() {
   });
 
   const onSubmit = async (data: RegisterFormData) => {
+    if (!termsAccepted) {
+      Alert.alert(
+        "Términos requeridos",
+        "Debes aceptar los términos y condiciones para continuar."
+      );
+      return;
+    }
+
     try {
       await signUp(data.email, data.password, data.fullName);
       const { session: currentSession } = useAuthStore.getState();
+
       if (currentSession) {
-        router.replace("/(auth)/role-selection");
+        if (role) {
+          await setRole(role as UserRole);
+        }
+        router.replace({
+          pathname: "/(auth)/welcome",
+          params: { role: role || "client" },
+        });
       } else {
-        // Email confirmation required — user must verify first
         Alert.alert(
           "Revisa tu correo",
           "Te enviamos un enlace de verificación. Confírmalo para continuar.",
-          [{ text: "OK", onPress: () => router.replace("/(auth)/login") }],
+          [{ text: "OK", onPress: () => router.replace("/(auth)/login") }]
         );
       }
-    } catch (error: any) {
-      Alert.alert("Error", error.message || "No se pudo crear la cuenta");
+    } catch {
+      router.push({
+        pathname: "/(auth)/register-error",
+        params: { role: role || "" },
+      });
     }
   };
 
@@ -58,9 +82,8 @@ export default function RegisterScreen() {
           keyboardShouldPersistTaps="handled"
         >
           <View style={styles.header}>
-            <Text style={styles.title}>Crear cuenta</Text>
-            <Text style={styles.subtitle}>
-              Regístrate para comenzar a usar TocToc
+            <Text style={styles.title}>
+              Completa tus datos para personalizar tu experiencia
             </Text>
           </View>
 
@@ -71,7 +94,7 @@ export default function RegisterScreen() {
               render={({ field: { onChange, onBlur, value } }) => (
                 <Input
                   label="Nombre completo"
-                  placeholder="Juan Pérez"
+                  placeholder="Nombre y apellidos"
                   autoCapitalize="words"
                   autoComplete="name"
                   onChangeText={onChange}
@@ -88,7 +111,7 @@ export default function RegisterScreen() {
               render={({ field: { onChange, onBlur, value } }) => (
                 <Input
                   label="Email"
-                  placeholder="tu@email.com"
+                  placeholder="example@mail.com"
                   keyboardType="email-address"
                   autoCapitalize="none"
                   autoComplete="email"
@@ -106,7 +129,7 @@ export default function RegisterScreen() {
               render={({ field: { onChange, onBlur, value } }) => (
                 <Input
                   label="Contraseña"
-                  placeholder="Mínimo 6 caracteres"
+                  placeholder="••••••••••••"
                   secureTextEntry
                   autoComplete="new-password"
                   onChangeText={onChange}
@@ -123,7 +146,7 @@ export default function RegisterScreen() {
               render={({ field: { onChange, onBlur, value } }) => (
                 <Input
                   label="Confirmar contraseña"
-                  placeholder="Repite tu contraseña"
+                  placeholder="••••••••••••"
                   secureTextEntry
                   onChangeText={onChange}
                   onBlur={onBlur}
@@ -133,23 +156,44 @@ export default function RegisterScreen() {
               )}
             />
 
-            <Text style={styles.terms}>
-              Al registrarte aceptas nuestros{" "}
-              <Link href="/(auth)/terms" style={styles.link}>
-                Términos y Condiciones
-              </Link>
-            </Text>
+            <TouchableOpacity
+              style={styles.checkboxRow}
+              onPress={() => setTermsAccepted(!termsAccepted)}
+              activeOpacity={0.7}
+            >
+              <View
+                style={[
+                  styles.checkbox,
+                  termsAccepted && styles.checkboxChecked,
+                ]}
+              >
+                {termsAccepted && (
+                  <Ionicons name="checkmark" size={14} color="#FFF" />
+                )}
+              </View>
+              <Text style={styles.termsText}>
+                Acepto los{" "}
+                <Link href="/(auth)/terms" style={styles.termsLink}>
+                  términos y condiciones
+                </Link>
+                {" "}y la{" "}
+                <Link href="/(auth)/terms" style={styles.termsLink}>
+                  política de privacidad
+                </Link>
+              </Text>
+            </TouchableOpacity>
 
             <Button
-              title="Crear cuenta"
+              title="Continuar"
               onPress={handleSubmit(onSubmit)}
               loading={isLoading}
+              disabled={!termsAccepted}
             />
           </View>
 
           <View style={styles.footer}>
             <Text style={styles.footerText}>¿Ya tienes cuenta? </Text>
-            <Link href="/(auth)/login" style={styles.link}>
+            <Link href="/(auth)/login" style={styles.footerLink}>
               Inicia sesión
             </Link>
           </View>
@@ -176,22 +220,44 @@ const styles = StyleSheet.create({
     marginBottom: SPACING.xl,
   },
   title: {
-    fontSize: FONT_SIZE.xxl,
+    fontSize: FONT_SIZE.xl,
     fontWeight: "700",
     color: COLORS.text,
-  },
-  subtitle: {
-    fontSize: FONT_SIZE.md,
-    color: COLORS.textSecondary,
-    marginTop: SPACING.xs,
+    lineHeight: 30,
   },
   form: {
     marginBottom: SPACING.lg,
   },
-  terms: {
-    fontSize: FONT_SIZE.xs,
+  checkboxRow: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    gap: SPACING.sm,
+    marginBottom: SPACING.lg,
+  },
+  checkbox: {
+    width: 22,
+    height: 22,
+    borderRadius: 4,
+    borderWidth: 2,
+    borderColor: COLORS.border,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 1,
+  },
+  checkboxChecked: {
+    backgroundColor: COLORS.primary,
+    borderColor: COLORS.primary,
+  },
+  termsText: {
+    flex: 1,
+    fontSize: FONT_SIZE.sm,
     color: COLORS.textSecondary,
-    marginBottom: SPACING.md,
+    lineHeight: 20,
+  },
+  termsLink: {
+    color: COLORS.primary,
+    fontWeight: "500",
+    textDecorationLine: "underline",
   },
   footer: {
     flexDirection: "row",
@@ -201,7 +267,7 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZE.sm,
     color: COLORS.textSecondary,
   },
-  link: {
+  footerLink: {
     fontSize: FONT_SIZE.sm,
     color: COLORS.primary,
     fontWeight: "600",
