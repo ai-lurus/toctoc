@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   View,
   Text,
@@ -48,8 +49,10 @@ export default function LoginScreen() {
           keyboardShouldPersistTaps="handled"
         >
           <View style={styles.header}>
-            <Text style={styles.title}>Inicia sesión</Text>
-            <Text style={styles.subtitle}>Bienvenido de nuevo</Text>
+            <Text style={styles.logo}>TocToc</Text>
+            <Text style={styles.subtitle}>
+              Servicios a domicilio en un toque
+            </Text>
           </View>
 
           <View style={styles.form}>
@@ -58,7 +61,7 @@ export default function LoginScreen() {
               name="email"
               render={({ field: { onChange, onBlur, value } }) => (
                 <Input
-                  label="Correo electrónico"
+                  label="Email"
                   placeholder="tu@email.com"
                   keyboardType="email-address"
                   autoCapitalize="none"
@@ -77,7 +80,7 @@ export default function LoginScreen() {
               render={({ field: { onChange, onBlur, value } }) => (
                 <Input
                   label="Contraseña"
-                  placeholder="••••••••"
+                  placeholder="Tu contraseña"
                   secureTextEntry
                   autoComplete="password"
                   onChangeText={onChange}
@@ -88,23 +91,16 @@ export default function LoginScreen() {
               )}
             />
 
-            <View style={styles.forgotRow}>
-              <Link href="/(auth)/forgot-password" style={styles.forgotLink}>
-                ¿Olvidaste tu contraseña?
-              </Link>
-            </View>
-
             <Button
               title="Iniciar sesión"
               onPress={handleSubmit(onSubmit)}
               loading={isLoading}
-              style={styles.button}
             />
           </View>
 
           <View style={styles.footer}>
             <Text style={styles.footerText}>¿No tienes cuenta? </Text>
-            <Link href="/(auth)/role-selection" style={styles.link}>
+            <Link href="/(auth)/register" style={styles.link}>
               Regístrate
             </Link>
           </View>
@@ -128,13 +124,13 @@ const styles = StyleSheet.create({
     padding: SPACING.lg,
   },
   header: {
-    marginBottom: SPACING.xl,
+    alignItems: "center",
+    marginBottom: SPACING.xxl,
   },
-  title: {
-    fontSize: 28,
-    fontWeight: "700",
-    color: COLORS.text,
-    letterSpacing: -0.3,
+  logo: {
+    fontSize: 40,
+    fontWeight: "800",
+    color: COLORS.primary,
   },
   subtitle: {
     fontSize: FONT_SIZE.md,
@@ -143,18 +139,6 @@ const styles = StyleSheet.create({
   },
   form: {
     marginBottom: SPACING.lg,
-  },
-  forgotRow: {
-    alignItems: "flex-end",
-    marginBottom: SPACING.md,
-  },
-  forgotLink: {
-    fontSize: FONT_SIZE.sm,
-    color: COLORS.primary,
-    fontWeight: "500",
-  },
-  button: {
-    marginTop: SPACING.xs,
   },
   footer: {
     flexDirection: "row",

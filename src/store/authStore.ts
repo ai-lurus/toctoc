@@ -18,7 +18,6 @@ interface AuthState {
   signIn: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
   setRole: (role: "client" | "provider") => Promise<void>;
-  resetPassword: (email: string) => Promise<void>;
   fetchProfile: () => Promise<void>;
   updateProfile: (data: ProfileUpdate) => Promise<void>;
 }
@@ -77,16 +76,11 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   signIn: async (email, password) => {
     set({ isLoading: true });
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
+      const { error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
       if (error) throw error;
-
-      if (data.session) {
-        set({ session: data.session, user: data.session.user });
-        await get().fetchProfile();
-      }
     } finally {
       set({ isLoading: false });
     }
@@ -95,17 +89,9 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   signOut: async () => {
     set({ isLoading: true });
     try {
-      await supabase.auth.signOut();
-    } finally {
-      set({ session: null, user: null, profile: null, isLoading: false });
-    }
-  },
-
-  resetPassword: async (email) => {
-    set({ isLoading: true });
-    try {
-      const { error } = await supabase.auth.resetPasswordForEmail(email);
+      const { error } = await supabase.auth.signOut();
       if (error) throw error;
+      set({ session: null, user: null, profile: null });
     } finally {
       set({ isLoading: false });
     }

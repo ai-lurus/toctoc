@@ -12,116 +12,87 @@ import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { COLORS } from "@/lib/constants";
 import { styles } from "./styles";
+import { getStandardHeaderOptions } from "@/lib/navigation";
 
 export default function ProvidersScreen() {
-    const { categoryId, categoryName } = useLocalSearchParams<{
-        categoryId: string;
+    const { categoryName } = useLocalSearchParams<{
         categoryName: string;
     }>();
 
-    const [sortBy, setSortBy] = useState<"price_asc" | "price_desc" | null>(null);
-    const [filterHighRated, setFilterHighRated] = useState(false);
+    const [filter, setFilter] = useState<"rating" | "proximity" | null>("rating");
 
     const providers = [
         {
             id: "1",
             name: "María López",
-            serviceType: "Limpieza",
-            serviceLevel: "EXPRESS",
+            serviceType: "Limpieza general",
             rating: 4.9,
             reviews: 127,
             distance: "2.3 km",
             price: 240,
             image: "https://i.pravatar.cc/150?u=maria",
-            isOnline: true,
         },
         {
             id: "2",
             name: "Juan Pérez",
-            serviceType: "Limpieza",
-            serviceLevel: "EXPRESS",
+            serviceType: "Limpieza profunda",
             rating: 4.7,
             reviews: 95,
             distance: "3.1 km",
             price: 220,
             image: "https://i.pravatar.cc/150?u=juan",
-            isOnline: true,
         },
         {
             id: "3",
             name: "Ana García",
-            serviceType: "Limpieza",
-            serviceLevel: "EXPRESS",
-            rating: 4.4,
-            reviews: 82,
-            distance: "1.5 km",
+            serviceType: "Limpieza express",
+            rating: 4.8,
+            reviews: 156,
+            distance: "4.5 km",
             price: 260,
             image: "https://i.pravatar.cc/150?u=ana",
-            isOnline: false,
         }
     ];
 
-    const filteredAndSortedProviders = useMemo(() => {
+    const filteredProviders = useMemo(() => {
         let result = [...providers];
-
-        if (filterHighRated) {
-            result = result.filter(p => p.rating >= 4.5);
+        if (filter === "rating") {
+            result.sort((a, b) => b.rating - a.rating);
+        } else if (filter === "proximity") {
+            result.sort((a, b) => parseFloat(a.distance) - parseFloat(b.distance));
         }
-
-        if (sortBy === "price_asc") {
-            result.sort((a, b) => a.price - b.price);
-        } else if (sortBy === "price_desc") {
-            result.sort((a, b) => b.price - a.price);
-        }
-
         return result;
-    }, [filterHighRated, sortBy]);
+    }, [filter]);
 
     return (
         <SafeAreaView style={styles.container} edges={["left", "right"]}>
             <Stack.Screen
-                options={{
-                    headerShown: true,
-                    title: "Proveedores",
-                    headerTintColor: COLORS.text,
-                }}
+                options={getStandardHeaderOptions({
+                    title: categoryName || "Limpieza de hogar",
+                    subtitle: `${providers.length} proveedores disponibles`,
+                })}
             />
-
-            <View style={styles.header}>
-                <Text style={styles.title}>Selecciona un proveedor para</Text>
-                <Text style={styles.serviceName}>{categoryName}</Text>
-            </View>
 
             <View style={styles.filtersWrapper}>
                 <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.filtersContainer}>
                     <TouchableOpacity
-                        style={[styles.filterChip, filterHighRated && styles.filterChipActive]}
-                        onPress={() => setFilterHighRated(!filterHighRated)}
+                        style={[styles.filterChip, filter === "rating" && styles.filterChipActive]}
+                        onPress={() => setFilter("rating")}
                     >
-                        <Ionicons name="star" size={14} color={filterHighRated ? "#FFF" : "#FFC107"} />
-                        <Text style={[styles.filterText, filterHighRated && styles.filterTextActive]}>4.5+</Text>
+                        <Text style={[styles.filterText, filter === "rating" && styles.filterTextActive]}>Mejor calificación</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity
-                        style={[styles.filterChip, sortBy === "price_asc" && styles.filterChipActive]}
-                        onPress={() => setSortBy(sortBy === "price_asc" ? null : "price_asc")}
+                        style={[styles.filterChip, filter === "proximity" && styles.filterChipActive]}
+                        onPress={() => setFilter("proximity")}
                     >
-                        <Ionicons name="trending-down" size={14} color={sortBy === "price_asc" ? "#FFF" : "#666"} />
-                        <Text style={[styles.filterText, sortBy === "price_asc" && styles.filterTextActive]}>Precio más bajo</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                        style={[styles.filterChip, sortBy === "price_desc" && styles.filterChipActive]}
-                        onPress={() => setSortBy(sortBy === "price_desc" ? null : "price_desc")}
-                    >
-                        <Ionicons name="trending-up" size={14} color={sortBy === "price_desc" ? "#FFF" : "#666"} />
-                        <Text style={[styles.filterText, sortBy === "price_desc" && styles.filterTextActive]}>Precio más alto</Text>
+                        <Text style={[styles.filterText, filter === "proximity" && styles.filterTextActive]}>Más cercano</Text>
                     </TouchableOpacity>
                 </ScrollView>
             </View>
 
             <FlatList
-                data={filteredAndSortedProviders}
+                data={filteredProviders}
                 keyExtractor={(item) => item.id}
                 contentContainerStyle={styles.list}
                 renderItem={({ item }) => (
@@ -133,7 +104,7 @@ export default function ProvidersScreen() {
                                 pathname: "/(client)/(home)/provider/[id]",
                                 params: {
                                     id: item.id,
-                                    serviceName: categoryName,
+                                    serviceName,
                                     providerName: item.name,
                                     providerImage: item.image,
                                     providerRating: String(item.rating),
@@ -145,57 +116,41 @@ export default function ProvidersScreen() {
                             });
                         }}
                     >
-                        <View style={styles.cardTop}>
+                        <TouchableOpacity
+                            onPress={() => {
+                                router.push({
+                                    pathname: "/(client)/(home)/provider-profile",
+                                    params: {
+                                        providerId: item.id,
+                                        providerName: item.name,
+                                        serviceName: item.serviceType
+                                    },
+                                })
+                            }}
+                        >
                             <Image source={{ uri: item.image }} style={styles.avatar} />
-                            <View style={styles.cardContent}>
-                                <View style={styles.nameRow}>
-                                    <Text style={styles.providerName}>{item.name}</Text>
-                                    {item.isOnline && <View style={styles.statusDot} />}
-                                </View>
+                        </TouchableOpacity>
 
-                                <View style={styles.serviceRow}>
-                                    <Text style={styles.serviceType}>{item.serviceType}</Text>
-                                    <Text style={styles.serviceLevel}>{item.serviceLevel}</Text>
-                                </View>
+                        <View style={styles.cardContent}>
+                            <Text style={styles.providerName}>{item.name}</Text>
+                            <Text style={styles.serviceType}>{item.serviceType}</Text>
 
-                                <View style={styles.ratingRow}>
-                                    <View style={styles.starsContainer}>
-                                        {[1, 2, 3, 4, 5].map((s) => {
-                                            let iconName: any = "star";
-                                            if (item.rating < s - 0.5) {
-                                                iconName = "star-outline";
-                                            } else if (item.rating < s) {
-                                                iconName = "star-half";
-                                            }
-                                            return (
-                                                <Ionicons
-                                                    key={s}
-                                                    name={iconName}
-                                                    size={16}
-                                                    color="#FFC107"
-                                                    style={{ marginRight: 2 }}
-                                                />
-                                            );
-                                        })}
-                                    </View>
-                                    <Text style={styles.ratingNumber}>{item.rating}</Text>
-                                    <Text style={styles.reviewsText}>({item.reviews} reseñas)</Text>
-                                </View>
+                            <View style={styles.ratingRow}>
+                                <Ionicons name="star" size={14} color="#FFC107" />
+                                <Text style={styles.ratingNumber}>{item.rating}</Text>
+                                <Text style={styles.reviewsText}>({item.reviews} reseñas)</Text>
+                            </View>
 
-                                <View style={styles.infoRow}>
-                                    <View style={styles.distanceContainer}>
-                                        <Ionicons name="location" size={14} color="#E57373" />
-                                        <Text style={styles.distanceText}>{item.distance}</Text>
-                                    </View>
-                                    <Text style={styles.priceText}>${item.price}</Text>
-                                </View>
+                            <View style={styles.distanceRow}>
+                                <Ionicons name="location" size={14} color={COLORS.error} />
+                                <Text style={styles.distanceText}>{item.distance}</Text>
                             </View>
                         </View>
 
-                        <View
-                            style={styles.selectButton}
-                        >
-                            <Text style={styles.selectButtonText}>Ver perfil</Text>
+                        <View style={styles.priceContainer}>
+                            <Text style={styles.priceText}>
+                                ${item.price}<Text style={styles.priceUnit}>/hr</Text>
+                            </Text>
                         </View>
                         <Ionicons
                             name="chevron-forward"
@@ -208,7 +163,7 @@ export default function ProvidersScreen() {
                 ListEmptyComponent={
                     <View style={styles.empty}>
                         <Text style={styles.emptyText}>
-                            No hay proveedores disponibles para este servicio
+                            No hay proveedores disponibles
                         </Text>
                     </View>
                 }

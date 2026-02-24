@@ -16,11 +16,8 @@ export default function ProfileScreen() {
         text: "Salir",
         style: "destructive",
         onPress: async () => {
-          try {
-            await signOut();
-          } finally {
-            router.replace("/(auth)/login");
-          }
+          await signOut();
+          router.replace("/");
         },
       },
     ]);

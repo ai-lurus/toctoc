@@ -6,7 +6,6 @@ import {
   StyleSheet,
   type TextInputProps,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 import { COLORS, SPACING, FONT_SIZE, BORDER_RADIUS } from "@/lib/constants";
 
 interface InputProps extends TextInputProps {
@@ -14,7 +13,7 @@ interface InputProps extends TextInputProps {
   error?: string;
 }
 
-export function Input({ label, error, style, onFocus, onBlur: onBlurProp, ...props }: InputProps) {
+export function Input({ label, error, style, ...props }: InputProps) {
   const [isFocused, setIsFocused] = useState(false);
 
   return (
@@ -24,26 +23,15 @@ export function Input({ label, error, style, onFocus, onBlur: onBlurProp, ...pro
         style={[
           styles.input,
           isFocused && styles.focused,
-          error && styles.errorInput,
+          error && styles.error,
           style,
         ]}
         placeholderTextColor={COLORS.textTertiary}
-        onFocus={(e) => {
-          setIsFocused(true);
-          onFocus?.(e);
-        }}
-        onBlur={(e) => {
-          setIsFocused(false);
-          onBlurProp?.(e);
-        }}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
         {...props}
       />
-      {error && (
-        <View style={styles.errorRow}>
-          <Ionicons name="alert-circle" size={14} color={COLORS.error} />
-          <Text style={styles.errorText}>{error}</Text>
-        </View>
-      )}
+      {error && <Text style={styles.errorText}>{error}</Text>}
     </View>
   );
 }
@@ -71,17 +59,12 @@ const styles = StyleSheet.create({
   focused: {
     borderColor: COLORS.primary,
   },
-  errorInput: {
+  error: {
     borderColor: COLORS.error,
-  },
-  errorRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 4,
-    marginTop: SPACING.xs,
   },
   errorText: {
     fontSize: FONT_SIZE.xs,
     color: COLORS.error,
+    marginTop: SPACING.xs,
   },
 });

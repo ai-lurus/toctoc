@@ -29,6 +29,7 @@ export default function ServiceConfigScreen() {
         providerName: string;
     }>();
 
+    // Mocked configuration fields
     const configFields: ConfigField[] = [
         {
             id: "area",
@@ -126,8 +127,10 @@ export default function ServiceConfigScreen() {
             />
 
             <ScrollView style={styles.form} contentContainerStyle={styles.formContent}>
+                {/* Fixed configurations */}
                 {configFields.map(renderField)}
 
+                {/* Notes Input */}
                 <View style={styles.fieldContainer}>
                     <Text style={styles.label}>Notas adicionales <Text style={{ fontWeight: '400', fontSize: 12, color: COLORS.textSecondary }}>(opcional)</Text></Text>
                     <TextInput
@@ -142,6 +145,7 @@ export default function ServiceConfigScreen() {
                     />
                 </View>
 
+                {/* Estimated Price Card */}
                 <View style={styles.priceCard}>
                     <Text style={styles.priceLabel}>Precio estimado</Text>
                     <Text style={styles.priceValue}>$290</Text>
