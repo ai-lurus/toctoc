@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   View,
   Text,
@@ -7,33 +8,42 @@ import {
   ScrollView,
   Alert,
 } from "react-native";
-import { Link, router } from "expo-router";
+import { Link } from "expo-router";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Ionicons } from "@expo/vector-icons";
 import { useAuthStore } from "@/store/authStore";
-import { loginSchema, type LoginFormData } from "@/utils/validation";
+import {
+  forgotPasswordSchema,
+  type ForgotPasswordFormData,
+} from "@/utils/validation";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
-import { COLORS, SPACING, FONT_SIZE } from "@/lib/constants";
+import { COLORS, SPACING, FONT_SIZE, BORDER_RADIUS } from "@/lib/constants";
 
-export default function LoginScreen() {
-  const { signIn, isLoading } = useAuthStore();
+export default function ForgotPasswordScreen() {
+  const { resetPassword, isLoading } = useAuthStore();
+  const [emailSent, setEmailSent] = useState(false);
+
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginFormData>({
-    resolver: zodResolver(loginSchema),
-    defaultValues: { email: "", password: "" },
+  } = useForm<ForgotPasswordFormData>({
+    resolver: zodResolver(forgotPasswordSchema),
+    defaultValues: { email: "" },
   });
 
-  const onSubmit = async (data: LoginFormData) => {
+  const onSubmit = async (data: ForgotPasswordFormData) => {
     try {
-      await signIn(data.email, data.password);
-      router.replace("/");
+      await resetPassword(data.email);
+      setEmailSent(true);
     } catch (error: any) {
-      Alert.alert("Error", error.message || "No se pudo iniciar sesión");
+      Alert.alert(
+        "Error",
+        error.message || "No se pudo enviar el enlace de recuperación"
+      );
     }
   };
 
@@ -48,8 +58,11 @@ export default function LoginScreen() {
           keyboardShouldPersistTaps="handled"
         >
           <View style={styles.header}>
-            <Text style={styles.title}>Inicia sesión</Text>
-            <Text style={styles.subtitle}>Bienvenido de nuevo</Text>
+            <Text style={styles.title}>Recuperar contraseña</Text>
+            <Text style={styles.subtitle}>
+              Ingresa tu correo electrónico y te enviaremos un enlace para
+              restablecer tu contraseña
+            </Text>
           </View>
 
           <View style={styles.form}>
@@ -71,31 +84,21 @@ export default function LoginScreen() {
               )}
             />
 
-            <Controller
-              control={control}
-              name="password"
-              render={({ field: { onChange, onBlur, value } }) => (
-                <Input
-                  label="Contraseña"
-                  placeholder="••••••••"
-                  secureTextEntry
-                  autoComplete="password"
-                  onChangeText={onChange}
-                  onBlur={onBlur}
-                  value={value}
-                  error={errors.password?.message}
+            {emailSent && (
+              <View style={styles.successBanner}>
+                <Ionicons
+                  name="checkmark-circle"
+                  size={18}
+                  color={COLORS.success}
                 />
-              )}
-            />
-
-            <View style={styles.forgotRow}>
-              <Link href="/(auth)/forgot-password" style={styles.forgotLink}>
-                ¿Olvidaste tu contraseña?
-              </Link>
-            </View>
+                <Text style={styles.successText}>
+                  Enlace enviado. Revisa tu correo electrónico
+                </Text>
+              </View>
+            )}
 
             <Button
-              title="Iniciar sesión"
+              title="Enviar enlace"
               onPress={handleSubmit(onSubmit)}
               loading={isLoading}
               style={styles.button}
@@ -103,9 +106,9 @@ export default function LoginScreen() {
           </View>
 
           <View style={styles.footer}>
-            <Text style={styles.footerText}>¿No tienes cuenta? </Text>
-            <Link href="/(auth)/role-selection" style={styles.link}>
-              Regístrate
+            <Text style={styles.footerText}>Volver a </Text>
+            <Link href="/(auth)/login" style={styles.link}>
+              Iniciar sesión
             </Link>
           </View>
         </ScrollView>
@@ -117,7 +120,7 @@ export default function LoginScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.background,
+    backgroundColor: COLORS.primaryLight,
   },
   flex: {
     flex: 1,
@@ -139,18 +142,27 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: FONT_SIZE.md,
     color: COLORS.textSecondary,
-    marginTop: SPACING.xs,
+    marginTop: SPACING.sm,
+    lineHeight: 22,
   },
   form: {
-    marginBottom: SPACING.lg,
+    marginBottom: SPACING.xl,
   },
-  forgotRow: {
-    alignItems: "flex-end",
+  successBanner: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: SPACING.sm,
+    backgroundColor: "#ECFDF5",
+    borderWidth: 1,
+    borderColor: "#A7F3D0",
+    borderRadius: BORDER_RADIUS.md,
+    padding: SPACING.md,
     marginBottom: SPACING.md,
   },
-  forgotLink: {
+  successText: {
+    flex: 1,
     fontSize: FONT_SIZE.sm,
-    color: COLORS.primary,
+    color: "#065F46",
     fontWeight: "500",
   },
   button: {

@@ -104,7 +104,7 @@ export default function ProvidersScreen() {
                                 pathname: "/(client)/(home)/provider/[id]",
                                 params: {
                                     id: item.id,
-                                    serviceName,
+                                    serviceName: categoryName || item.serviceType,
                                     providerName: item.name,
                                     providerImage: item.image,
                                     providerRating: String(item.rating),
@@ -149,7 +149,7 @@ export default function ProvidersScreen() {
 
                         <View style={styles.priceContainer}>
                             <Text style={styles.priceText}>
-                                ${item.price}<Text style={styles.priceUnit}>/hr</Text>
+                                ${item.price}/hr
                             </Text>
                         </View>
                         <Ionicons
