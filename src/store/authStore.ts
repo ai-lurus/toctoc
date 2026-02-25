@@ -14,7 +14,7 @@ interface AuthState {
   isInitialized: boolean;
 
   initialize: () => Promise<void>;
-  signUp: (email: string, password: string, fullName: string) => Promise<void>;
+  signUp: (email: string, password: string, fullName: string, role?: string) => Promise<void>;
   signIn: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
   setRole: (role: "client" | "provider") => Promise<void>;
@@ -54,17 +54,16 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     });
   },
 
-  signUp: async (email, password, fullName) => {
+  signUp: async (email, password, fullName, role) => {
     set({ isLoading: true });
     try {
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
-        options: { data: { full_name: fullName } },
+        options: { data: { full_name: fullName, role: role ?? null } },
       });
       if (error) throw error;
 
-      // Set session/user immediately so role-selection can use them
       if (data.session) {
         set({ session: data.session, user: data.session.user });
         await get().fetchProfile();
@@ -96,6 +95,8 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     set({ isLoading: true });
     try {
       await supabase.auth.signOut();
+    } catch {
+      // Ignore server-side errors — local state is always cleared below
     } finally {
       set({ session: null, user: null, profile: null, isLoading: false });
     }
