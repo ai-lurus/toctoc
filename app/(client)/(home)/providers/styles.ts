@@ -90,6 +90,11 @@ export const styles = StyleSheet.create({
         flex: 1,
         marginLeft: 16,
     },
+    nameRow: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+    },
     providerName: {
         fontSize: 18,
         fontWeight: "600",
@@ -116,6 +121,10 @@ export const styles = StyleSheet.create({
         color: "#66BC99",
         marginLeft: 4,
     },
+    starsContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+    },
     ratingRow: {
         flexDirection: "row",
         alignItems: "center",
@@ -131,6 +140,16 @@ export const styles = StyleSheet.create({
         fontSize: 12,
         color: COLORS.textTertiary,
         marginLeft: 4,
+    },
+    infoRow: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        marginTop: 8,
+    },
+    distanceContainer: {
+        flexDirection: "row",
+        alignItems: "center",
     },
     distanceRow: {
         flexDirection: "row",
@@ -160,6 +179,11 @@ export const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         marginTop: 20,
+    },
+    selectButtonText: {
+        color: "#FFFFFF",
+        fontSize: 16,
+        fontWeight: "600",
     },
     chevronContainer: {
         marginLeft: 12,
