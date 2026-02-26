@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useState } from "react";
 import {
   View,
@@ -8,6 +9,9 @@ import {
   Alert,
   Linking,
 } from "react-native";
+=======
+import { View, Text, StyleSheet, Alert, Platform } from "react-native";
+>>>>>>> master
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
@@ -21,17 +25,22 @@ export default function ProfileScreen() {
   const insets = useSafeAreaInsets();
 
   const handleSignOut = () => {
+    if (Platform.OS === "web") {
+      // Alert.alert uses window.confirm internally in react-native-web but
+      // can fail in some browser contexts. Call window.confirm directly instead.
+      if (!window.confirm("¿Estás seguro que quieres cerrar sesión?")) return;
+      signOut().then(() => router.replace("/(auth)/login"));
+      return;
+    }
+
     Alert.alert("Cerrar sesión", "¿Estás seguro que quieres salir?", [
       { text: "Cancelar", style: "cancel" },
       {
         text: "Salir",
         style: "destructive",
         onPress: async () => {
-          try {
-            await signOut();
-          } finally {
-            router.replace("/(auth)/login");
-          }
+          await signOut();
+          router.replace("/(auth)/login");
         },
       },
     ]);

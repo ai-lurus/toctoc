@@ -18,12 +18,11 @@ import { registerSchema, type RegisterFormData } from "@/utils/validation";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { COLORS, SPACING, FONT_SIZE, BORDER_RADIUS } from "@/lib/constants";
-import type { UserRole } from "@/types/enums";
 import { useState } from "react";
 
 export default function RegisterScreen() {
   const { role } = useLocalSearchParams<{ role: string }>();
-  const { signUp, setRole, isLoading } = useAuthStore();
+  const { signUp, isLoading } = useAuthStore();
   const [termsAccepted, setTermsAccepted] = useState(false);
 
   const {
@@ -45,23 +44,21 @@ export default function RegisterScreen() {
     }
 
     try {
-      await signUp(data.email, data.password, data.fullName);
+      await signUp(data.email, data.password, data.fullName, role || undefined);
       const { session: currentSession } = useAuthStore.getState();
 
       if (currentSession) {
-        if (role) {
-          await setRole(role as UserRole);
-        }
+        // Email confirmation is OFF — session available immediately
         router.replace({
           pathname: "/(auth)/welcome",
           params: { role: role || "client" },
         });
       } else {
-        Alert.alert(
-          "Revisa tu correo",
-          "Te enviamos un enlace de verificación. Confírmalo para continuar.",
-          [{ text: "OK", onPress: () => router.replace("/(auth)/login") }]
-        );
+        // Email confirmation is ON — send user to verify screen
+        router.replace({
+          pathname: "/(auth)/verify-email",
+          params: { email: data.email },
+        });
       }
     } catch {
       router.push({

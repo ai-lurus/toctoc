@@ -52,7 +52,10 @@ export default function ClientHomeScreen() {
         </View>
         <Text style={styles.statusTitle}>Limpieza general</Text>
         <Text style={styles.statusSubtitle}>El proveedor está en camino • 15 min</Text>
-        <TouchableOpacity style={styles.statusButton}>
+        <TouchableOpacity
+          style={styles.statusButton}
+          onPress={() => router.push("/(client)/(history)/service-progress" as any)}
+        >
           <Text style={styles.statusButtonText}>Ver detalles del servicio</Text>
         </TouchableOpacity>
       </View>

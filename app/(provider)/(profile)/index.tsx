@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Alert } from "react-native";
+import { View, Text, StyleSheet, Alert, Platform } from "react-native";
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -11,17 +11,20 @@ export default function ProviderProfileScreen() {
   const { profile, signOut, isLoading } = useAuthStore();
 
   const handleSignOut = () => {
+    if (Platform.OS === "web") {
+      if (!window.confirm("¿Estás seguro que quieres cerrar sesión?")) return;
+      signOut().then(() => router.replace("/(auth)/login"));
+      return;
+    }
+
     Alert.alert("Cerrar sesión", "¿Estás seguro que quieres salir?", [
       { text: "Cancelar", style: "cancel" },
       {
         text: "Salir",
         style: "destructive",
         onPress: async () => {
-          try {
-            await signOut();
-          } finally {
-            router.replace("/(auth)/login");
-          }
+          await signOut();
+          router.replace("/(auth)/login");
         },
       },
     ]);
