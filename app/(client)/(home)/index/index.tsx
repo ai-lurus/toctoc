@@ -33,7 +33,11 @@ export default function ClientHomeScreen() {
           </Text>
           <Text style={styles.subtitle}>¿Qué servicio necesitas hoy?</Text>
         </View>
-        <TouchableOpacity style={styles.notificationContainer}>
+        <TouchableOpacity
+          style={styles.notificationContainer}
+          onPress={() => router.push("/(client)/(home)/notifications")}
+          activeOpacity={0.7}
+        >
           <Ionicons name="notifications" size={24} color={COLORS.secondary} />
           <View style={styles.badge}>
             <Text style={styles.badgeText}>2</Text>

@@ -16,6 +16,7 @@ export const styles = StyleSheet.create({
     width: "100%",
     paddingHorizontal: SPACING.md,
     paddingBottom: SPACING.md,
+    alignItems: "center",
   },
   headerTitle: {
     fontSize: FONT_SIZE.xl,
