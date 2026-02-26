@@ -26,8 +26,8 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
   },
   headerTitle: {
-    fontSize: FONT_SIZE.lg,
-    fontWeight: "600",
+    fontSize: FONT_SIZE.xl,
+    fontWeight: "700",
     color: "#fff",
   },
 

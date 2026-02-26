@@ -16,11 +16,10 @@ export const styles = StyleSheet.create({
     width: "100%",
     paddingHorizontal: SPACING.md,
     paddingBottom: SPACING.md,
-    alignItems: "center",
   },
   headerTitle: {
-    fontSize: FONT_SIZE.lg,
-    fontWeight: "600",
+    fontSize: FONT_SIZE.xl,
+    fontWeight: "700",
     color: "#fff",
   },
 
