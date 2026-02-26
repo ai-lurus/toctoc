@@ -60,7 +60,10 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
-        options: { data: { full_name: fullName, role: role ?? null } },
+        options: {
+          data: { full_name: fullName, role: role ?? null },
+          emailRedirectTo: "https://toctoc-fawn.vercel.app/confirm",
+        },
       });
       if (error) throw error;
 
