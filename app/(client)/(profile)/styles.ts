@@ -7,18 +7,19 @@ export const styles = StyleSheet.create({
     backgroundColor: COLORS.background,
   },
   scrollContent: {
-    paddingBottom: SPACING.xxl,
+    paddingBottom: 0,
   },
 
   /* ═══ Header ═══ */
   header: {
     backgroundColor: COLORS.primary,
     width: "100%",
-    paddingBottom: SPACING.sm + 2,
+    paddingHorizontal: SPACING.md,
+    paddingBottom: SPACING.md,
     alignItems: "center",
   },
   headerTitle: {
-    fontSize: FONT_SIZE.md,
+    fontSize: FONT_SIZE.lg,
     fontWeight: "600",
     color: "#fff",
   },
@@ -210,8 +211,9 @@ export const styles = StyleSheet.create({
   signOutButton: {
     alignItems: "center",
     marginHorizontal: SPACING.lg,
-    marginTop: SPACING.lg,
-    paddingVertical: SPACING.md,
+    marginTop: SPACING.sm,
+    marginBottom: 0,
+    paddingVertical: SPACING.xs,
   },
   signOutText: {
     fontSize: FONT_SIZE.md,

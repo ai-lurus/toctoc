@@ -55,7 +55,7 @@ export default function ProfileScreen() {
         contentContainerStyle={styles.scrollContent}
       >
         {/* Header */}
-        <View style={[styles.header, { paddingTop: insets.top + SPACING.sm }]}>
+        <View style={[styles.header, { paddingTop: insets.top + 8 }]}>
           <Text style={styles.headerTitle}>Perfil</Text>
         </View>
 
