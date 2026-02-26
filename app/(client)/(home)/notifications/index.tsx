@@ -16,56 +16,7 @@ interface NotificationItem {
   isRead: boolean;
 }
 
-const INITIAL_NOTIFICATIONS: NotificationItem[] = [
-  {
-    id: "1",
-    title: "Nueva reserva confirmada",
-    body: "Tu servicio de limpieza está programado para mañana a las 10:00 AM",
-    time: "Hace 5 min",
-    icon: "•",
-    isRead: false,
-  },
-  {
-    id: "2",
-    title: "Recordatorio de servicio",
-    body: "Tu lavado de auto es en 2 horas. El proveedor llegará a las 3:00 PM",
-    time: "Hace 1 hora",
-    icon: "🔔",
-    isRead: false,
-  },
-  {
-    id: "3",
-    title: "Pago procesado exitosamente",
-    body: "Se procesó tu pago de $240",
-    time: "Hace 3 horas",
-    icon: "💳",
-    isRead: false,
-  },
-  {
-    id: "4",
-    title: "Califica tu servicio",
-    body: "Ayúdanos a mejorar. Califica el servicio de limpieza del 9 de Feb",
-    time: "Ayer 5:20 PM",
-    icon: "⭐",
-    isRead: true,
-  },
-  {
-    id: "5",
-    title: "Servicio completado",
-    body: "Tu servicio de lavado de auto ha sido completado exitosamente",
-    time: "8 Feb 6:45 PM",
-    icon: "✅",
-    isRead: true,
-  },
-  {
-    id: "6",
-    title: "Proveedor en camino",
-    body: "María López está en camino a tu domicilio",
-    time: "8 Feb 3:00 PM",
-    icon: "🚗",
-    isRead: true,
-  },
-];
+const INITIAL_NOTIFICATIONS: NotificationItem[] = [];
 
 export default function NotificationsScreen() {
   const insets = useSafeAreaInsets();

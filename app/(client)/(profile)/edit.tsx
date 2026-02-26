@@ -85,7 +85,7 @@ export default function EditProfileScreen() {
                 <Text style={styles.fieldLabel}>Nombre completo</Text>
                 <TextInput
                   style={styles.input}
-                  placeholder="Juan Pérez"
+                  placeholder="Ingresa tu nombre completo"
                   placeholderTextColor={COLORS.textTertiary}
                   value={value}
                   onChangeText={onChange}
@@ -104,7 +104,7 @@ export default function EditProfileScreen() {
                 <Text style={styles.fieldLabel}>Teléfono</Text>
                 <TextInput
                   style={styles.input}
-                  placeholder="+52 33 1234 5678"
+                  placeholder="Ingresa tu teléfono"
                   placeholderTextColor={COLORS.textTertiary}
                   keyboardType="phone-pad"
                   value={value ?? ""}
@@ -123,7 +123,7 @@ export default function EditProfileScreen() {
                 <Text style={styles.fieldLabel}>Dirección</Text>
                 <TextInput
                   style={[styles.input, styles.inputMultiline]}
-                  placeholder="Calle y número, colonia, ciudad"
+                  placeholder="Ingresa tu dirección"
                   placeholderTextColor={COLORS.textTertiary}
                   value={value ?? ""}
                   onChangeText={onChange}
@@ -142,7 +142,7 @@ export default function EditProfileScreen() {
                 <Text style={styles.fieldLabel}>Referencia (opcional)</Text>
                 <TextInput
                   style={styles.input}
-                  placeholder="Ej: Casa color azul, portón negro"
+                  placeholder="Referencia adicional"
                   placeholderTextColor={COLORS.textTertiary}
                   value={value ?? ""}
                   onChangeText={onChange}

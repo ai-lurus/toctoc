@@ -39,9 +39,6 @@ export default function ClientHomeScreen() {
           activeOpacity={0.7}
         >
           <Ionicons name="notifications" size={24} color={COLORS.secondary} />
-          <View style={styles.badge}>
-            <Text style={styles.badgeText}>2</Text>
-          </View>
         </TouchableOpacity>
       </View>
 

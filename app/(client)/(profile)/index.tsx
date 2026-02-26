@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { useState } from "react";
 import {
   View,
@@ -8,10 +7,8 @@ import {
   Switch,
   Alert,
   Linking,
+  Platform,
 } from "react-native";
-=======
-import { View, Text, StyleSheet, Alert, Platform } from "react-native";
->>>>>>> master
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
@@ -21,7 +18,7 @@ import { styles } from "./styles";
 
 export default function ProfileScreen() {
   const { profile, signOut, isLoading } = useAuthStore();
-  const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+  const [notificationsEnabled, setNotificationsEnabled] = useState(false);
   const insets = useSafeAreaInsets();
 
   const handleSignOut = () => {
@@ -128,13 +125,9 @@ export default function ProfileScreen() {
             <View style={styles.paymentInfo}>
               <Ionicons name="card-outline" size={20} color={COLORS.text} />
               <View style={styles.paymentDetails}>
-                <Text style={styles.paymentCard}>Visa •••• 4242</Text>
-                <Text style={styles.paymentExpiry}>Vence: 12/26</Text>
+                <Text style={styles.paymentCard}>Sin métodos registrados</Text>
               </View>
             </View>
-            <TouchableOpacity activeOpacity={0.7}>
-              <Text style={styles.rowAction}>Cambiar</Text>
-            </TouchableOpacity>
           </View>
 
           <TouchableOpacity style={styles.addCardButton} activeOpacity={0.7}>
