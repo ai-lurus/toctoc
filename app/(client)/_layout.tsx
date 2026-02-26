@@ -26,9 +26,9 @@ export default function ClientLayout() {
       <Tabs.Screen
         name="(history)"
         options={{
-          title: "Historial",
+          title: "Mis reservas",
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="time" size={size} color={color} />
+            <Ionicons name="calendar" size={size} color={color} />
           ),
         }}
       />
@@ -39,6 +39,12 @@ export default function ClientLayout() {
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="person" size={size} color={color} />
           ),
+        }}
+      />
+      <Tabs.Screen
+        name="(chat)"
+        options={{
+          href: null,
         }}
       />
     </Tabs>

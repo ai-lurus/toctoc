@@ -1,5 +1,5 @@
 import { Stack } from "expo-router";
 
-export default function HistoryLayout() {
+export default function BookingDetailLayout() {
     return <Stack screenOptions={{ headerShown: false }} />;
 }
