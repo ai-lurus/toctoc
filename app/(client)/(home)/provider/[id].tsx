@@ -1,5 +1,5 @@
-import { View, Text, ScrollView, Image, Alert } from "react-native";
-import { useLocalSearchParams, Stack } from "expo-router";
+import { View, Text, ScrollView, Image } from "react-native";
+import { useLocalSearchParams, Stack, router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { COLORS } from "@/lib/constants";
@@ -87,12 +87,14 @@ export default function ProviderDetailScreen() {
   );
 
   const handleSelectProvider = () => {
-    Alert.alert(
-      "Solicitar servicio",
-      "La funcionalidad de pago estará disponible próximamente (Sprint 3).",
-      [{ text: "Entendido" }],
-    );
-    console.log("Ir a Pago — providerId:", params.id);
+    router.push({
+      pathname: "/(client)/(home)/service-config",
+      params: {
+        providerId: params.id,
+        providerName: name,
+        serviceName: serviceLabel,
+      },
+    });
   };
 
   // Datos reales de Supabase o valores de los params
@@ -240,7 +242,7 @@ export default function ProviderDetailScreen() {
                     style={[
                       styles.tableValue,
                       group.schedule === "No disponible" &&
-                        styles.tableValueMuted,
+                      styles.tableValueMuted,
                     ]}
                   >
                     {group.schedule}
