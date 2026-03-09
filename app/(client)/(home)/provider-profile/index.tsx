@@ -10,13 +10,29 @@ import { Stack, router, useLocalSearchParams } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS } from "@/lib/constants";
-import { getStandardHeaderOptions } from "@/lib/navigation";
 import { styles } from "@/styles/provider-profile";
 
 export default function ProviderProfileScreen() {
-    const { providerId, providerName } = useLocalSearchParams<{
+    const {
+        providerId,
+        providerName,
+        serviceName,
+        providerImage,
+        providerRating,
+        providerReviews,
+        providerDistance,
+        providerPrice,
+        providerServiceType,
+    } = useLocalSearchParams<{
         providerId: string;
         providerName: string;
+        serviceName: string;
+        providerImage: string;
+        providerRating: string;
+        providerReviews: string;
+        providerDistance: string;
+        providerPrice: string;
+        providerServiceType: string;
     }>();
 
     const services = [
@@ -56,15 +72,39 @@ export default function ProviderProfileScreen() {
     return (
         <SafeAreaView style={styles.container} edges={["left", "right"]}>
             <Stack.Screen
-                options={getStandardHeaderOptions({
-                    title: providerName || "Perfil del proveedor",
-                })}
+                options={{
+                    headerShown: true,
+                    title: "",
+                    headerTintColor: COLORS.text,
+                    headerStyle: { backgroundColor: COLORS.surface },
+                    headerShadowVisible: false,
+                    headerBackTitle: "",
+                    headerBackTitleVisible: false,
+                    headerBackButtonDisplayMode: "minimal",
+                }}
             />
 
             <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
-                <View style={styles.header}>
+                <TouchableOpacity
+                    style={styles.header}
+                    activeOpacity={0.8}
+                    onPress={() => router.push({
+                        pathname: "/(client)/(home)/provider/[id]",
+                        params: {
+                            id: providerId,
+                            serviceName: serviceName || providerServiceType,
+                            providerName,
+                            providerImage,
+                            providerRating,
+                            providerReviews,
+                            providerDistance,
+                            providerPrice,
+                            providerServiceType,
+                        },
+                    })}
+                >
                     <View style={styles.avatarContainer}>
-                        <Image source={{ uri: `https://i.pravatar.cc/150?u=${providerId}` }} style={styles.avatar} />
+                        <Image source={{ uri: providerImage || `https://i.pravatar.cc/150?u=${providerId}` }} style={styles.avatar} />
                         <View style={styles.verifiedBadge}>
                             <Ionicons name="checkmark-circle" size={20} color={COLORS.primary} />
                         </View>
@@ -72,11 +112,15 @@ export default function ProviderProfileScreen() {
                     <Text style={styles.name}>{providerName || "María López"}</Text>
                     <View style={styles.ratingRow}>
                         <Ionicons name="star" size={16} color="#FFC107" />
-                        <Text style={styles.ratingText}>4.9</Text>
-                        <Text style={styles.reviewsCount}>(127 reseñas)</Text>
-                        <Text style={styles.distanceText}>• 2.3 km</Text>
+                        <Text style={styles.ratingText}>{providerRating || "4.9"}</Text>
+                        <Text style={styles.reviewsCount}>({providerReviews || "127"} reseñas)</Text>
+                        {providerDistance ? <Text style={styles.distanceText}>• {providerDistance}</Text> : null}
                     </View>
-                </View>
+                    <View style={styles.viewProfileRow}>
+                        <Text style={styles.viewProfileText}>Ver perfil completo</Text>
+                        <Ionicons name="chevron-forward" size={14} color={COLORS.primary} />
+                    </View>
+                </TouchableOpacity>
 
                 <View style={styles.experienceCard}>
                     <Text style={styles.experienceText}>

@@ -90,15 +90,12 @@ export const styles = StyleSheet.create({
         marginLeft: SPACING.xs,
         flex: 1,
     },
-    footer: {
-        padding: SPACING.lg,
-        backgroundColor: "#F9FAFB",
-    },
     searchButton: {
         backgroundColor: COLORS.success,
         borderRadius: BORDER_RADIUS.md,
         padding: SPACING.lg,
         alignItems: "center",
+        marginTop: SPACING.sm,
     },
     searchButtonText: {
         fontSize: FONT_SIZE.lg,

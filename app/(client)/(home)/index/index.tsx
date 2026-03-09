@@ -57,7 +57,7 @@ export default function ClientHomeScreen() {
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity style={styles.expressBanner}>
+      <TouchableOpacity style={styles.expressBanner} onPress={() => router.push("/(client)/(home)/service-config")} activeOpacity={0.8}>
         <View style={styles.expressContent}>
           <Ionicons name="flash" size={24} color="white" />
           <View style={styles.expressTextContainer}>
@@ -91,6 +91,7 @@ export default function ClientHomeScreen() {
           />
         )}
         contentContainerStyle={styles.grid}
+        columnWrapperStyle={styles.gridRow}
         refreshControl={
           <RefreshControl refreshing={isLoading} onRefresh={refetch} />
         }

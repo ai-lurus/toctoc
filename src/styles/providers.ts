@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
         backgroundColor: COLORS.background,
     },
     header: {
-        padding: SPACING.md,
+        padding: SPACING.lg,
         backgroundColor: COLORS.surface,
     },
     filtersWrapper: {
@@ -16,8 +16,8 @@ export const styles = StyleSheet.create({
         borderBottomColor: "#F0F0F0",
     },
     filtersContainer: {
-        paddingHorizontal: SPACING.md,
-        paddingVertical: 8,
+        paddingHorizontal: SPACING.lg,
+        paddingVertical: SPACING.sm,
         flexDirection: "row",
         alignItems: "center",
     },
@@ -59,15 +59,18 @@ export const styles = StyleSheet.create({
         color: COLORS.text,
         marginTop: 4,
     },
-    list: {
-        padding: SPACING.md,
+    listContainer: {
         backgroundColor: "#F2F2F2",
+    },
+    list: {
+        padding: SPACING.lg,
+        flexGrow: 1,
     },
     card: {
         backgroundColor: COLORS.surface,
-        borderRadius: 20,
-        padding: 20,
-        marginBottom: 20,
+        borderRadius: BORDER_RADIUS.lg,
+        padding: SPACING.md,
+        marginBottom: SPACING.lg,
         shadowColor: "#000",
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.05,
@@ -88,7 +91,7 @@ export const styles = StyleSheet.create({
     },
     cardContent: {
         flex: 1,
-        marginLeft: 16,
+        marginLeft: SPACING.md,
     },
     nameRow: {
         flexDirection: "row",
@@ -174,11 +177,11 @@ export const styles = StyleSheet.create({
     },
     selectButton: {
         backgroundColor: "#3BB29B",
-        borderRadius: 15,
+        borderRadius: BORDER_RADIUS.md,
         height: 50,
         justifyContent: "center",
         alignItems: "center",
-        marginTop: 20,
+        marginTop: SPACING.lg,
     },
     selectButtonText: {
         color: "#FFFFFF",

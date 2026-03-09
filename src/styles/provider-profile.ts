@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
     },
     header: {
         backgroundColor: COLORS.surface,
-        padding: SPACING.xl,
+        padding: SPACING.lg,
         alignItems: "center",
         borderBottomWidth: 1,
         borderBottomColor: COLORS.border,
@@ -61,7 +61,7 @@ export const styles = StyleSheet.create({
     },
     experienceCard: {
         backgroundColor: COLORS.surface,
-        margin: SPACING.md,
+        margin: SPACING.lg,
         padding: SPACING.md,
         borderRadius: BORDER_RADIUS.md,
         borderWidth: 1,
@@ -77,13 +77,13 @@ export const styles = StyleSheet.create({
         fontSize: FONT_SIZE.md,
         fontWeight: "700",
         color: COLORS.text,
-        marginHorizontal: SPACING.md,
+        marginHorizontal: SPACING.lg,
         marginTop: SPACING.lg,
         marginBottom: SPACING.md,
     },
     serviceItem: {
         backgroundColor: COLORS.surface,
-        marginHorizontal: SPACING.md,
+        marginHorizontal: SPACING.lg,
         marginBottom: SPACING.sm,
         padding: SPACING.md,
         borderRadius: BORDER_RADIUS.md,
@@ -132,7 +132,7 @@ export const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        marginHorizontal: SPACING.md,
+        marginHorizontal: SPACING.lg,
         marginTop: SPACING.lg,
         marginBottom: SPACING.md,
     },
@@ -143,7 +143,7 @@ export const styles = StyleSheet.create({
     },
     reviewCard: {
         backgroundColor: COLORS.surface,
-        marginHorizontal: SPACING.md,
+        marginHorizontal: SPACING.lg,
         marginBottom: SPACING.sm,
         padding: SPACING.md,
         borderRadius: BORDER_RADIUS.md,
@@ -181,5 +181,16 @@ export const styles = StyleSheet.create({
         color: COLORS.textSecondary,
         lineHeight: 20,
         marginTop: SPACING.xs,
+    },
+    viewProfileRow: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginTop: SPACING.sm,
+        gap: 2,
+    },
+    viewProfileText: {
+        fontSize: FONT_SIZE.sm,
+        color: COLORS.primary,
+        fontWeight: "600",
     },
 });

@@ -150,9 +150,7 @@ export default function ServiceConfigScreen() {
                         <Text style={styles.priceNote}>El pago se realiza solo si el proveedor acepta</Text>
                     </View>
                 </View>
-            </ScrollView>
 
-            <View style={styles.footer}>
                 <TouchableOpacity
                     style={styles.searchButton}
                     onPress={() =>
@@ -168,9 +166,9 @@ export default function ServiceConfigScreen() {
                         })
                     }
                 >
-                    <Text style={styles.searchButtonText}>Buscar proveedor</Text>
+                    <Text style={styles.searchButtonText}>{providerId ? "Confirmar" : "Buscar proveedor"}</Text>
                 </TouchableOpacity>
-            </View>
+            </ScrollView>
         </SafeAreaView>
     );
 }

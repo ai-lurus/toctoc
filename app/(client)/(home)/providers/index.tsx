@@ -94,6 +94,7 @@ export default function ProvidersScreen() {
             <FlatList
                 data={filteredProviders}
                 keyExtractor={(item) => item.id}
+                style={styles.listContainer}
                 contentContainerStyle={styles.list}
                 renderItem={({ item }) => (
                     <TouchableOpacity
@@ -101,11 +102,11 @@ export default function ProvidersScreen() {
                         activeOpacity={0.9}
                         onPress={() => {
                             router.push({
-                                pathname: "/(client)/(home)/provider/[id]",
+                                pathname: "/(client)/(home)/provider-profile",
                                 params: {
-                                    id: item.id,
-                                    serviceName: categoryName || item.serviceType,
+                                    providerId: item.id,
                                     providerName: item.name,
+                                    serviceName: categoryName || item.serviceType,
                                     providerImage: item.image,
                                     providerRating: String(item.rating),
                                     providerReviews: String(item.reviews),
@@ -116,20 +117,7 @@ export default function ProvidersScreen() {
                             });
                         }}
                     >
-                        <TouchableOpacity
-                            onPress={() => {
-                                router.push({
-                                    pathname: "/(client)/(home)/provider-profile",
-                                    params: {
-                                        providerId: item.id,
-                                        providerName: item.name,
-                                        serviceName: item.serviceType
-                                    },
-                                })
-                            }}
-                        >
-                            <Image source={{ uri: item.image }} style={styles.avatar} />
-                        </TouchableOpacity>
+                        <Image source={{ uri: item.image }} style={styles.avatar} />
 
                         <View style={styles.cardContent}>
                             <Text style={styles.providerName}>{item.name}</Text>

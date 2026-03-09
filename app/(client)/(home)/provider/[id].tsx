@@ -1,12 +1,11 @@
 import { View, Text, ScrollView, Image } from "react-native";
-import { useLocalSearchParams, Stack, router } from "expo-router";
+import { useLocalSearchParams, Stack } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { COLORS } from "@/lib/constants";
 import { useSupabaseQuery } from "@/hooks/useSupabaseQuery";
 import { getProviderById } from "@/services/providers";
 import type { ProviderProfile } from "@/services/providers";
-import { Button } from "@/components/ui/Button";
 import { formatRating, formatDate, formatCurrency } from "@/utils/format";
 import { styles } from "@/styles/provider";
 
@@ -85,17 +84,6 @@ export default function ProviderDetailScreen() {
     () => getProviderById(params.id),
     [params.id],
   );
-
-  const handleSelectProvider = () => {
-    router.push({
-      pathname: "/(client)/(home)/service-config",
-      params: {
-        providerId: params.id,
-        providerName: name,
-        serviceName: serviceLabel,
-      },
-    });
-  };
 
   // Datos reales de Supabase o valores de los params
   const name = provider?.full_name ?? params.providerName ?? "Proveedor";
@@ -352,15 +340,6 @@ export default function ProviderDetailScreen() {
             </View>
           )}
         </ScrollView>
-
-        {/* ═══ Bottom CTA ═══ */}
-        <View style={styles.bottomBar}>
-          <Button
-            title="Seleccionar proveedor"
-            onPress={handleSelectProvider}
-            size="lg"
-          />
-        </View>
       </SafeAreaView>
     </>
   );

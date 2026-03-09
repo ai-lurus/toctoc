@@ -140,9 +140,6 @@ export default function ConfirmationScreen() {
                         </Text>
                     </View>
                 </View>
-            </ScrollView>
-
-            <View style={styles.footer}>
                 <TouchableOpacity
                     style={styles.confirmButton}
                     onPress={() => router.push({
@@ -159,7 +156,7 @@ export default function ConfirmationScreen() {
                 >
                     <Text style={styles.confirmButtonText}>Confirmar solicitud</Text>
                 </TouchableOpacity>
-            </View>
+            </ScrollView>
         </SafeAreaView>
     );
 }
