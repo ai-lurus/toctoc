@@ -14,7 +14,7 @@ interface AuthState {
   isInitialized: boolean;
 
   initialize: () => Promise<void>;
-  signUp: (email: string, password: string, fullName: string, role?: string) => Promise<void>;
+  signUp: (email: string, password: string, fullName: string, role?: string) => Promise<boolean>;
   signIn: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
   setRole: (role: "client" | "provider") => Promise<void>;
@@ -70,7 +70,9 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       if (data.session) {
         set({ session: data.session, user: data.session.user });
         await get().fetchProfile();
+        return true;
       }
+      return false;
     } finally {
       set({ isLoading: false });
     }

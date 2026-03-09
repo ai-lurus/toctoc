@@ -2,8 +2,9 @@ import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
+import { Stack, router } from "expo-router";
 import { COLORS, SPACING, FONT_SIZE, BORDER_RADIUS } from "@/lib/constants";
+import { getStandardHeaderOptions } from "@/lib/navigation";
 
 const STEPS = [
     { id: 1, label: "En camino", description: "Tu proveedor está en camino", done: true, current: false },
@@ -13,13 +14,8 @@ const STEPS = [
 
 export default function ServiceProgressScreen() {
     return (
-        <SafeAreaView style={styles.container} edges={["top"]}>
-            <View style={styles.header}>
-                <TouchableOpacity onPress={() => router.back()} style={styles.backBtn}>
-                    <Ionicons name="chevron-back" size={24} color="#fff" />
-                </TouchableOpacity>
-                <Text style={styles.headerTitle}>Servicio en progreso</Text>
-            </View>
+        <SafeAreaView style={styles.container} edges={["left", "right", "bottom"]}>
+            <Stack.Screen options={getStandardHeaderOptions({ title: "Servicio en progreso" })} />
 
             <ScrollView contentContainerStyle={styles.content}>
                 <View style={styles.providerCard}>
@@ -86,9 +82,6 @@ export default function ServiceProgressScreen() {
 
 const styles = StyleSheet.create({
     container: { flex: 1, backgroundColor: COLORS.background },
-    header: { backgroundColor: COLORS.primary, flexDirection: "row", alignItems: "center", padding: SPACING.md },
-    backBtn: { marginRight: 12 },
-    headerTitle: { color: "#fff", fontSize: FONT_SIZE.md, fontWeight: "700" },
     content: { padding: SPACING.lg },
     providerCard: { flexDirection: "row", alignItems: "center", backgroundColor: "#fff", padding: 16, borderRadius: 12, marginBottom: 24, elevation: 2 },
     avatar: { width: 44, height: 44, borderRadius: 22, backgroundColor: COLORS.primary, alignItems: "center", justifyContent: "center", marginRight: 12 },

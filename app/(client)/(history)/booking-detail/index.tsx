@@ -2,20 +2,16 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Modal } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
+import { Stack, router } from "expo-router";
 import { COLORS, SPACING, FONT_SIZE, BORDER_RADIUS } from "@/lib/constants";
+import { getStandardHeaderOptions } from "@/lib/navigation";
 
 export default function BookingDetailScreen() {
     const [showCancel, setShowCancel] = useState(false);
 
     return (
-        <SafeAreaView style={styles.container} edges={["top"]}>
-            <View style={styles.header}>
-                <TouchableOpacity onPress={() => router.back()} style={styles.backBtn}>
-                    <Ionicons name="chevron-back" size={24} color="#fff" />
-                </TouchableOpacity>
-                <Text style={styles.headerTitle}>Detalles de reserva</Text>
-            </View>
+        <SafeAreaView style={styles.container} edges={["left", "right", "bottom"]}>
+            <Stack.Screen options={getStandardHeaderOptions({ title: "Detalles de reserva" })} />
 
             <ScrollView contentContainerStyle={styles.content}>
                 <View style={styles.statusBadge}>
@@ -119,9 +115,6 @@ function InfoItem({ icon, label, value }: { icon: any, label: string, value: str
 
 const styles = StyleSheet.create({
     container: { flex: 1, backgroundColor: COLORS.background },
-    header: { backgroundColor: COLORS.primary, flexDirection: "row", alignItems: "center", padding: SPACING.md },
-    backBtn: { marginRight: 12 },
-    headerTitle: { color: "#fff", fontSize: FONT_SIZE.md, fontWeight: "700" },
     content: { padding: SPACING.lg },
     statusBadge: { flexDirection: "row", alignItems: "center", gap: 6, backgroundColor: "#E8F5E9", paddingHorizontal: 12, paddingVertical: 6, borderRadius: 20, alignSelf: "center", marginBottom: 20 },
     statusText: { fontSize: 10, fontWeight: "700", color: "#388E3C" },

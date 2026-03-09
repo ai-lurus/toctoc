@@ -1,10 +1,11 @@
 import { View, Alert, ScrollView, Text, TouchableOpacity, TextInput } from "react-native";
-import { router } from "expo-router";
+import { Stack, router } from "expo-router";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Ionicons } from "@expo/vector-icons";
-import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { getStandardHeaderOptions } from "@/lib/navigation";
 import { useAuthStore } from "@/store/authStore";
 import { Button } from "@/components/ui/Button";
 import { COLORS } from "@/lib/constants";
@@ -21,7 +22,6 @@ type EditProfileFormData = z.infer<typeof editProfileSchema>;
 
 export default function EditProfileScreen() {
   const { profile, updateProfile, isLoading } = useAuthStore();
-  const insets = useSafeAreaInsets();
 
   const {
     control,
@@ -52,14 +52,8 @@ export default function EditProfileScreen() {
 
   return (
     <SafeAreaView style={styles.container} edges={["left", "right", "bottom"]}>
+      <Stack.Screen options={getStandardHeaderOptions({ title: "Editar perfil" })} />
       <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-        <View style={[styles.header, { paddingTop: insets.top + 8 }]}>
-          <TouchableOpacity style={styles.backButton} onPress={() => router.back()} activeOpacity={0.7}>
-            <Ionicons name="chevron-back" size={20} color="#fff" />
-          </TouchableOpacity>
-          <Text style={styles.headerTitle}>Editar perfil</Text>
-        </View>
-
         <TouchableOpacity
           style={styles.photoCard}
           activeOpacity={0.7}

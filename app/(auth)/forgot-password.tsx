@@ -7,8 +7,9 @@ import {
   Platform,
   ScrollView,
   Alert,
+  TouchableOpacity,
 } from "react-native";
-import { Link } from "expo-router";
+import { router } from "expo-router";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -107,9 +108,9 @@ export default function ForgotPasswordScreen() {
 
           <View style={styles.footer}>
             <Text style={styles.footerText}>Volver a </Text>
-            <Link href="/(auth)/login" style={styles.link}>
-              Iniciar sesión
-            </Link>
+            <TouchableOpacity onPress={() => router.back()}>
+              <Text style={styles.link}>Iniciar sesión</Text>
+            </TouchableOpacity>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
@@ -152,9 +153,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: SPACING.sm,
-    backgroundColor: "#ECFDF5",
+    backgroundColor: COLORS.successBackground,
     borderWidth: 1,
-    borderColor: "#A7F3D0",
+    borderColor: COLORS.successLight,
     borderRadius: BORDER_RADIUS.md,
     padding: SPACING.md,
     marginBottom: SPACING.md,
@@ -162,7 +163,7 @@ const styles = StyleSheet.create({
   successText: {
     flex: 1,
     fontSize: FONT_SIZE.sm,
-    color: "#065F46",
+    color: COLORS.successText,
     fontWeight: "500",
   },
   button: {

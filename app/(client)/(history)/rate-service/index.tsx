@@ -2,14 +2,16 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
+import { Stack, router } from "expo-router";
 import { COLORS, SPACING, FONT_SIZE, BORDER_RADIUS } from "@/lib/constants";
+import { getStandardHeaderOptions } from "@/lib/navigation";
 
 export default function RateServiceScreen() {
     const [rating, setRating] = useState(0);
 
     return (
-        <SafeAreaView style={styles.container} edges={["top", "bottom"]}>
+        <SafeAreaView style={styles.container} edges={["left", "right", "bottom"]}>
+            <Stack.Screen options={getStandardHeaderOptions({ title: "Calificar servicio" })} />
             <ScrollView contentContainerStyle={styles.content}>
                 <View style={styles.checkCircle}>
                     <Ionicons name="checkmark" size={48} color="#fff" />
