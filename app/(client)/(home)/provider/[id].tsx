@@ -8,7 +8,7 @@ import { getProviderById } from "@/services/providers";
 import type { ProviderProfile } from "@/services/providers";
 import { Button } from "@/components/ui/Button";
 import { formatRating, formatDate, formatCurrency } from "@/utils/format";
-import { styles } from "./styles";
+import { styles } from "./_styles";
 
 /* ── Helpers ── */
 

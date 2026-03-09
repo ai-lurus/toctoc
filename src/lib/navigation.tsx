@@ -64,7 +64,8 @@ export const getStandardHeaderOptions = ({
         headerTitleContainerStyle: {
             marginLeft: 0,
         },
-        headerBackTitle: "", // Ensure no text is shown next to back button
-        headerBackTitleVisible: false, // Hide "Back" text on iOS
+        headerBackTitle: "",
+        headerBackTitleVisible: false,
+        headerBackButtonDisplayMode: "minimal",
     };
 };

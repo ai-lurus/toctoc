@@ -11,7 +11,7 @@ import { router, useLocalSearchParams, Stack } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { COLORS } from "@/lib/constants";
-import { styles } from "./styles";
+import { styles } from "./_styles";
 import { getStandardHeaderOptions } from "@/lib/navigation";
 
 export default function ProvidersScreen() {

@@ -11,7 +11,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS, BORDER_RADIUS } from "@/lib/constants";
 import { getStandardHeaderOptions } from "@/lib/navigation";
-import { styles } from "./styles";
+import { styles } from "./_styles";
 
 export default function ConfirmationScreen() {
     const { serviceId, serviceName, providerId, providerName, config } = useLocalSearchParams<{

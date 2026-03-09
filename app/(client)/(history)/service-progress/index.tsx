@@ -16,7 +16,6 @@ export default function ServiceProgressScreen() {
     return (
         <SafeAreaView style={styles.container} edges={["left", "right", "bottom"]}>
             <Stack.Screen options={getStandardHeaderOptions({ title: "Servicio en progreso" })} />
-
             <ScrollView contentContainerStyle={styles.content}>
                 <View style={styles.providerCard}>
                     <View style={styles.avatar}>

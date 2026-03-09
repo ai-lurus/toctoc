@@ -12,7 +12,6 @@ export default function BookingDetailScreen() {
     return (
         <SafeAreaView style={styles.container} edges={["left", "right", "bottom"]}>
             <Stack.Screen options={getStandardHeaderOptions({ title: "Detalles de reserva" })} />
-
             <ScrollView contentContainerStyle={styles.content}>
                 <View style={styles.statusBadge}>
                     <Ionicons name="checkmark-circle" size={14} color="#388E3C" />
@@ -60,9 +59,7 @@ export default function BookingDetailScreen() {
                     </View>
                 </View>
 
-                <TouchableOpacity
-                    style={styles.contactBtn}
-                >
+                <TouchableOpacity style={styles.contactBtn}>
                     <Text style={styles.contactBtnText}>Contactar proveedor</Text>
                 </TouchableOpacity>
 

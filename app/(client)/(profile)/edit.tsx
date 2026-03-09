@@ -9,7 +9,7 @@ import { getStandardHeaderOptions } from "@/lib/navigation";
 import { useAuthStore } from "@/store/authStore";
 import { Button } from "@/components/ui/Button";
 import { COLORS } from "@/lib/constants";
-import { styles } from "./edit-styles";
+import { styles } from "./_edit-styles";
 
 const editProfileSchema = z.object({
   fullName: z.string().trim().min(2, "Ingresa tu nombre completo"),
