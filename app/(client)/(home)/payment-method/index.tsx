@@ -13,7 +13,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS, FONT_SIZE, SPACING } from "@/lib/constants";
 import { getStandardHeaderOptions } from "@/lib/navigation";
-import { styles } from "./_styles";
+import { styles } from "@/styles/payment-method";
 
 export default function PaymentMethodScreen() {
     const [cardData, setCardData] = useState({

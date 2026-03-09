@@ -11,7 +11,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS } from "@/lib/constants";
 import { getStandardHeaderOptions } from "@/lib/navigation";
-import { styles } from "./_styles";
+import { styles } from "@/styles/provider-profile";
 
 export default function ProviderProfileScreen() {
     const { providerId, providerName } = useLocalSearchParams<{

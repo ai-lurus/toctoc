@@ -14,7 +14,7 @@ import { getCategories } from "@/services/categories";
 import { CategoryCard } from "@/components/cards/CategoryCard";
 import { LoadingScreen } from "@/components/ui/LoadingScreen";
 import { COLORS } from "@/lib/constants";
-import { styles } from "./_styles";
+import { styles } from "@/styles/home";
 
 export default function ClientHomeScreen() {
   const { profile } = useAuthStore();

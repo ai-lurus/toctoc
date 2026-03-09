@@ -4,7 +4,7 @@ import { Stack } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getStandardHeaderOptions } from "@/lib/navigation";
-import { styles } from "./_styles";
+import { styles } from "@/styles/notifications";
 
 type NotificationTab = "all" | "unread";
 

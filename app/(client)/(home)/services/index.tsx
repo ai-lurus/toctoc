@@ -12,7 +12,7 @@ import { getServicesByCategory } from "@/services/categories";
 import { LoadingScreen } from "@/components/ui/LoadingScreen";
 import { formatCurrency } from "@/utils/format";
 import { COLORS, SPACING } from "@/lib/constants";
-import { styles } from "./_styles";
+import { styles } from "@/styles/services";
 
 export default function ServicesScreen() {
   const { categoryId, categoryName, providerId, providerName } = useLocalSearchParams<{

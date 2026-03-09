@@ -9,7 +9,7 @@ import { Stack, router, useLocalSearchParams } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS, SPACING, FONT_SIZE, BORDER_RADIUS } from "@/lib/constants";
-import { styles } from "./_styles";
+import { styles } from "@/styles/searching";
 
 export default function SearchingScreen() {
     const {
