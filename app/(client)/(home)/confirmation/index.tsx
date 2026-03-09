@@ -146,11 +146,14 @@ export default function ConfirmationScreen() {
                 <TouchableOpacity
                     style={styles.confirmButton}
                     onPress={() => router.push({
-                        pathname: "/(client)/(home)/searching",
+                        pathname: "/(client)/(home)/processing-payment",
                         params: {
                             serviceId,
                             serviceName,
-                            config
+                            providerId,
+                            providerName,
+                            config,
+                            amount: "240",
                         }
                     })}
                 >
