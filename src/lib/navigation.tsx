@@ -66,6 +66,6 @@ export const getStandardHeaderOptions = ({
         },
         headerBackTitle: "",
         headerBackTitleVisible: false,
-        headerBackButtonDisplayMode: "minimal",
+        headerBackButtonDisplayMode: "minimal" as const,
     };
 };

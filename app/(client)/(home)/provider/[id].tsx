@@ -1,5 +1,5 @@
-import { View, Text, ScrollView, Image } from "react-native";
-import { useLocalSearchParams, Stack } from "expo-router";
+import { View, Text, ScrollView, Image, TouchableOpacity } from "react-native";
+import { useLocalSearchParams, Stack, router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { COLORS } from "@/lib/constants";
@@ -113,6 +113,9 @@ export default function ProviderDetailScreen() {
           headerTintColor: COLORS.text,
           headerStyle: { backgroundColor: COLORS.surface },
           headerShadowVisible: false,
+          headerBackTitle: "",
+          headerBackTitleVisible: false,
+          headerBackButtonDisplayMode: "minimal",
         }}
       />
 
@@ -248,45 +251,101 @@ export default function ProviderDetailScreen() {
                 size={20}
                 color={COLORS.text}
               />
-              <Text style={styles.sectionHeaderTitle}>Servicios y precios</Text>
+              <Text style={styles.sectionHeaderTitle}>Servicios que ofrece</Text>
             </View>
-            <View style={styles.tableCard}>
-              {providerServices.length > 0 ? (
-                providerServices.map((svc, i) => (
-                  <View
-                    key={svc.id}
-                    style={[
-                      styles.tableRow,
-                      i < providerServices.length - 1 && styles.tableRowBorder,
-                    ]}
-                  >
-                    <View style={styles.serviceNameRow}>
+            {providerServices.length > 0 ? (
+              providerServices.map((svc) => (
+                <TouchableOpacity
+                  key={svc.id}
+                  style={styles.serviceCard}
+                  activeOpacity={0.85}
+                  onPress={() =>
+                    router.push({
+                      pathname: "/(client)/(home)/service-config",
+                      params: {
+                        providerId: params.id,
+                        providerName: name,
+                        serviceId: svc.service_id,
+                        serviceName: svc.service_name,
+                      },
+                    })
+                  }
+                >
+                  <View style={styles.serviceCardHeader}>
+                    <View style={styles.serviceCardTitleRow}>
                       <Ionicons
-                        name="checkmark-circle"
-                        size={18}
-                        color={COLORS.success}
+                        name={svc.service_icon as any}
+                        size={20}
+                        color={COLORS.primary}
                       />
-                      <Text style={styles.tableLabel}>{svc.service_name}</Text>
+                      <Text style={styles.serviceCardName}>{svc.service_name}</Text>
+                      {svc.immediate_available && (
+                        <View style={styles.availabilityDot} />
+                      )}
                     </View>
-                    <Text style={styles.servicePriceText}>
+                    <Text style={styles.serviceCardPrice}>
                       {formatCurrency(svc.base_price)}
+                      <Text style={styles.serviceCardPriceUnit}>/hr</Text>
                     </Text>
                   </View>
-                ))
-              ) : (
-                <View style={styles.tableRow}>
-                  <View style={styles.serviceNameRow}>
-                    <Ionicons
-                      name="checkmark-circle"
-                      size={18}
-                      color={COLORS.success}
-                    />
-                    <Text style={styles.tableLabel}>{serviceLabel}</Text>
+
+                  {svc.service_description && (
+                    <Text style={styles.serviceCardDescription}>
+                      {svc.service_description}
+                    </Text>
+                  )}
+
+                  <View style={styles.serviceCardFooter}>
+                    {svc.immediate_available ? (
+                      <View style={styles.availabilityBadge}>
+                        <Ionicons name="flash" size={12} color={COLORS.success} />
+                        <Text style={styles.availabilityBadgeText}>Disponible ahora</Text>
+                      </View>
+                    ) : (
+                      <View style={styles.availabilityScheduledBadge}>
+                        <Ionicons name="calendar-outline" size={12} color={COLORS.textSecondary} />
+                        <Text style={styles.availabilityScheduledText}>Con agenda previa</Text>
+                      </View>
+                    )}
+                    <View style={styles.scheduleButton}>
+                      <Text style={styles.scheduleButtonText}>Agendar</Text>
+                    </View>
                   </View>
-                  <Text style={styles.servicePriceText}>${price}</Text>
+                </TouchableOpacity>
+              ))
+            ) : (
+              <TouchableOpacity
+                style={styles.serviceCard}
+                activeOpacity={0.85}
+                onPress={() =>
+                  router.push({
+                    pathname: "/(client)/(home)/service-config",
+                    params: {
+                      providerId: params.id,
+                      providerName: name,
+                      serviceId: "",
+                      serviceName: serviceLabel,
+                    },
+                  })
+                }
+              >
+                <View style={styles.serviceCardHeader}>
+                  <View style={styles.serviceCardTitleRow}>
+                    <Ionicons name="construct" size={20} color={COLORS.primary} />
+                    <Text style={styles.serviceCardName}>{serviceLabel}</Text>
+                  </View>
+                  <Text style={styles.serviceCardPrice}>
+                    ${price}
+                    <Text style={styles.serviceCardPriceUnit}>/hr</Text>
+                  </Text>
                 </View>
-              )}
-            </View>
+                <View style={styles.serviceCardFooter}>
+                  <View style={styles.scheduleButton}>
+                    <Text style={styles.scheduleButtonText}>Agendar</Text>
+                  </View>
+                </View>
+              </TouchableOpacity>
+            )}
           </View>
 
           {/* ═══ Bio ═══ */}

@@ -169,17 +169,99 @@ export const styles = StyleSheet.create({
     fontStyle: "italic",
   },
 
-  /* ═══ Servicios ═══ */
-  serviceNameRow: {
+  /* ═══ Servicios (tappable cards) ═══ */
+  serviceCard: {
+    backgroundColor: COLORS.surface,
+    borderRadius: BORDER_RADIUS.lg,
+    padding: SPACING.md,
+    marginBottom: SPACING.sm,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+  },
+  serviceCardHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+  },
+  serviceCardTitleRow: {
     flexDirection: "row",
     alignItems: "center",
     gap: SPACING.sm,
     flex: 1,
   },
-  servicePriceText: {
-    fontSize: FONT_SIZE.sm,
-    fontWeight: "700",
+  serviceCardName: {
+    fontSize: FONT_SIZE.md,
+    fontWeight: "600",
     color: COLORS.text,
+    flex: 1,
+  },
+  availabilityDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: COLORS.success,
+  },
+  serviceCardPrice: {
+    fontSize: FONT_SIZE.lg,
+    fontWeight: "700",
+    color: COLORS.primary,
+    marginLeft: SPACING.sm,
+  },
+  serviceCardPriceUnit: {
+    fontSize: FONT_SIZE.xs,
+    fontWeight: "400",
+    color: COLORS.textSecondary,
+  },
+  serviceCardDescription: {
+    fontSize: FONT_SIZE.xs,
+    color: COLORS.textSecondary,
+    lineHeight: 18,
+    marginTop: SPACING.xs,
+  },
+  serviceCardFooter: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: SPACING.sm,
+  },
+  availabilityBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+    backgroundColor: COLORS.success + "18",
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: BORDER_RADIUS.sm,
+  },
+  availabilityBadgeText: {
+    fontSize: FONT_SIZE.xs,
+    color: COLORS.success,
+    fontWeight: "600",
+  },
+  availabilityScheduledBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+    backgroundColor: COLORS.border,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: BORDER_RADIUS.sm,
+  },
+  availabilityScheduledText: {
+    fontSize: FONT_SIZE.xs,
+    color: COLORS.textSecondary,
+    fontWeight: "500",
+  },
+  scheduleButton: {
+    backgroundColor: COLORS.primary,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: BORDER_RADIUS.md,
+  },
+  scheduleButtonText: {
+    color: "white",
+    fontWeight: "600",
+    fontSize: FONT_SIZE.sm,
   },
 
   /* ═══ Bio ═══ */
