@@ -8,8 +8,9 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
+import { Stack, router } from "expo-router";
 import { COLORS, SPACING, FONT_SIZE, BORDER_RADIUS } from "@/lib/constants";
+import { getStandardHeaderOptions } from "@/lib/navigation";
 
 const MOCK_UPCOMING = [
   {
@@ -110,10 +111,8 @@ export default function ReservasScreen() {
   const data = activeTab === "proximas" ? MOCK_UPCOMING : MOCK_PAST;
 
   return (
-    <SafeAreaView style={styles.container} edges={["top"]}>
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Mis Reservas</Text>
-      </View>
+    <SafeAreaView style={styles.container} edges={["left", "right", "bottom"]}>
+      <Stack.Screen options={getStandardHeaderOptions({ title: "Mis Reservas" })} />
 
       <View style={styles.tabs}>
         <TouchableOpacity
@@ -159,23 +158,10 @@ export default function ReservasScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: COLORS.background },
-  header: {
-    backgroundColor: COLORS.primary,
-    paddingHorizontal: SPACING.lg,
-    paddingTop: SPACING.xl,
-    paddingBottom: SPACING.lg,
-    borderBottomLeftRadius: BORDER_RADIUS.xl,
-    borderBottomRightRadius: BORDER_RADIUS.xl,
-    marginBottom: SPACING.md,
-  },
-  headerTitle: {
-    fontSize: FONT_SIZE.xl,
-    fontWeight: "800",
-    color: "#fff",
-  },
   tabs: {
     flexDirection: "row",
     marginHorizontal: SPACING.lg,
+    marginTop: SPACING.lg,
     marginBottom: SPACING.lg,
     backgroundColor: "#F3F4F6",
     borderRadius: BORDER_RADIUS.full,

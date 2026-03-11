@@ -214,17 +214,13 @@ export const styles = StyleSheet.create({
         lineHeight: 14,
         marginTop: 2,
     },
-    footer: {
-        padding: SPACING.lg,
-        backgroundColor: COLORS.surface,
-        borderTopWidth: 1,
-        borderTopColor: COLORS.border,
-    },
     confirmButton: {
         backgroundColor: COLORS.success,
         borderRadius: BORDER_RADIUS.md,
         padding: SPACING.lg,
         alignItems: "center",
+        marginTop: SPACING.sm,
+        marginBottom: SPACING.lg,
     },
     confirmButtonText: {
         color: "white",

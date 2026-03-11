@@ -2,11 +2,11 @@ import {
   View,
   Text,
   StyleSheet,
-  KeyboardAvoidingView,
-  Platform,
   ScrollView,
   Alert,
   TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import { Link, router, useLocalSearchParams } from "expo-router";
 import { useForm, Controller } from "react-hook-form";
@@ -24,7 +24,6 @@ export default function RegisterScreen() {
   const { role } = useLocalSearchParams<{ role: string }>();
   const { signUp, isLoading } = useAuthStore();
   const [termsAccepted, setTermsAccepted] = useState(false);
-
   const {
     control,
     handleSubmit,
@@ -44,10 +43,9 @@ export default function RegisterScreen() {
     }
 
     try {
-      await signUp(data.email, data.password, data.fullName, role || undefined);
-      const { session: currentSession } = useAuthStore.getState();
+      const hasSession = await signUp(data.email, data.password, data.fullName, role || undefined);
 
-      if (currentSession) {
+      if (hasSession) {
         // Email confirmation is OFF — session available immediately
         router.replace({
           pathname: "/(auth)/welcome",
@@ -60,16 +58,16 @@ export default function RegisterScreen() {
           params: { email: data.email },
         });
       }
-    } catch {
+    } catch (error: any) {
       router.push({
         pathname: "/(auth)/register-error",
-        params: { role: role || "" },
+        params: { role: role || "", message: error?.message || "" },
       });
     }
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} edges={["top", "left", "right"]}>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.flex}
@@ -108,7 +106,7 @@ export default function RegisterScreen() {
               render={({ field: { onChange, onBlur, value } }) => (
                 <Input
                   label="Email"
-                  placeholder="example@mail.com"
+                  placeholder="tu@email.com"
                   keyboardType="email-address"
                   autoCapitalize="none"
                   autoComplete="email"
@@ -165,7 +163,7 @@ export default function RegisterScreen() {
                 ]}
               >
                 {termsAccepted && (
-                  <Ionicons name="checkmark" size={14} color="#FFF" />
+                  <Ionicons name="checkmark" size={14} color={COLORS.white} />
                 )}
               </View>
               <Text style={styles.termsText}>
@@ -190,9 +188,9 @@ export default function RegisterScreen() {
 
           <View style={styles.footer}>
             <Text style={styles.footerText}>¿Ya tienes cuenta? </Text>
-            <Link href="/(auth)/login" style={styles.footerLink}>
-              Inicia sesión
-            </Link>
+            <TouchableOpacity onPress={() => router.dismissAll()}>
+              <Text style={styles.footerLink}>Inicia sesión</Text>
+            </TouchableOpacity>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
@@ -210,8 +208,8 @@ const styles = StyleSheet.create({
   },
   content: {
     flexGrow: 1,
-    justifyContent: "center",
     padding: SPACING.lg,
+    paddingTop: SPACING.xl,
   },
   header: {
     marginBottom: SPACING.xl,

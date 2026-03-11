@@ -8,11 +8,12 @@ import {
     KeyboardAvoidingView,
     Platform,
 } from "react-native";
-import { Stack, router } from "expo-router";
+import { Stack } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS, FONT_SIZE, SPACING } from "@/lib/constants";
-import { styles } from "./styles";
+import { getStandardHeaderOptions } from "@/lib/navigation";
+import { styles } from "@/styles/payment-method";
 
 export default function PaymentMethodScreen() {
     const [cardData, setCardData] = useState({
@@ -29,28 +30,10 @@ export default function PaymentMethodScreen() {
     return (
         <SafeAreaView style={styles.container} edges={["left", "right"]}>
             <Stack.Screen
-                options={{
-                    headerShown: true,
-                    headerTitle: () => (
-                        <View>
-                            <Text style={{ fontSize: FONT_SIZE.lg, fontWeight: "700", color: COLORS.text }}>
-                                Método de pago
-                            </Text>
-                            <Text style={{ fontSize: FONT_SIZE.sm, color: COLORS.textSecondary }}>
-                                Añade tu forma de pago
-                            </Text>
-                        </View>
-                    ),
-                    headerLeft: () => (
-                        <TouchableOpacity
-                            onPress={() => router.back()}
-                            style={{ marginLeft: -SPACING.xs, padding: SPACING.xs }}
-                        >
-                            <Ionicons name="chevron-back" size={24} color={COLORS.text} />
-                        </TouchableOpacity>
-                    ),
-                    headerTintColor: COLORS.text,
-                }}
+                options={getStandardHeaderOptions({
+                    title: "Método de pago",
+                    subtitle: "Añade tu forma de pago",
+                })}
             />
 
             <KeyboardAvoidingView
