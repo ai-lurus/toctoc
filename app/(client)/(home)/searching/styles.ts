@@ -27,9 +27,17 @@ export const styles = StyleSheet.create({
         marginBottom: SPACING.md,
     },
     successTitle: {
-        fontSize: FONT_SIZE.xl,
+        fontSize: FONT_SIZE.lg,
         fontWeight: "700",
         color: COLORS.text,
+        marginBottom: SPACING.xs,
+        textAlign: "center",
+    },
+    providerWaitingName: {
+        fontSize: FONT_SIZE.xl,
+        color: COLORS.text,
+        fontWeight: "700",
+        textAlign: "center",
         marginBottom: SPACING.xs,
     },
     successSubtitle: {
@@ -52,7 +60,34 @@ export const styles = StyleSheet.create({
         fontSize: FONT_SIZE.sm,
         color: "#B45309",
         textAlign: "center",
-        fontStyle: "italic",
+    },
+    timerRow: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        marginBottom: SPACING.xs,
+    },
+    timerLabel: {
+        fontSize: FONT_SIZE.sm,
+        color: "#92400E",
+        fontWeight: "600",
+    },
+    timerValue: {
+        fontSize: FONT_SIZE.sm,
+        color: COLORS.primary,
+        fontWeight: "700",
+    },
+    timerTrack: {
+        height: 6,
+        backgroundColor: "#E5E7EB",
+        borderRadius: 99,
+        overflow: "hidden",
+        marginBottom: SPACING.xs,
+    },
+    timerFill: {
+        height: "100%",
+        backgroundColor: COLORS.primary,
+        borderRadius: 99,
     },
     /* ─── Transaction card ─── */
     requestCard: {
@@ -79,22 +114,41 @@ export const styles = StyleSheet.create({
         alignItems: "center",
         paddingVertical: SPACING.sm,
     },
+    providerChip: {
+        flexDirection: "row",
+        alignItems: "center",
+        borderRadius: 999,
+        paddingVertical: SPACING.xs,
+    },
+    providerAvatarImage: {
+        width: 28,
+        height: 28,
+        borderRadius: 14,
+        marginRight: SPACING.xs,
+    },
     itemBorder: {
         borderTopWidth: 1,
         borderTopColor: COLORS.border,
     },
     iconBubble: {
-        width: 32,
-        height: 32,
-        borderRadius: 16,
-        backgroundColor: COLORS.primaryLight,
+        width: 28,
+        height: 28,
+        borderRadius: 14,
+        backgroundColor: COLORS.primary,
         alignItems: "center",
         justifyContent: "center",
+        marginRight: SPACING.xs,
     },
     iconBubbleText: {
         color: "white",
         fontSize: 13,
         fontWeight: "700",
+    },
+    providerChipName: {
+        fontSize: FONT_SIZE.sm,
+        color: COLORS.text,
+        fontWeight: "600",
+        marginRight: 6,
     },
     itemContent: {
         marginLeft: SPACING.md,
@@ -118,6 +172,11 @@ export const styles = StyleSheet.create({
         color: COLORS.primary,
         marginTop: 1,
     },
+    unpaidNote: {
+        marginTop: SPACING.xs,
+        fontSize: 11,
+        color: COLORS.textTertiary,
+    },
     /* ─── Footer ─── */
     footer: {
         padding: SPACING.lg,
@@ -128,7 +187,7 @@ export const styles = StyleSheet.create({
     primaryButton: {
         backgroundColor: COLORS.primary,
         borderRadius: BORDER_RADIUS.md,
-        padding: SPACING.lg,
+        paddingVertical: SPACING.md,
         alignItems: "center",
     },
     primaryButtonText: {
@@ -143,11 +202,26 @@ export const styles = StyleSheet.create({
     searchingTitle: { display: "none" },
     searchingSubtitle: { display: "none" },
     timerBadge: { display: "none" },
-    timerLabel: { display: "none" },
-    timerValue: { display: "none" },
     disclaimerBar: { display: "none" },
     requestText: { display: "none" },
-    secondaryButton: { display: "none" },
-    secondaryButtonText: { display: "none" },
-    bottomMessage: { display: "none" },
+    secondaryButton: {
+        marginTop: SPACING.md,
+        borderRadius: BORDER_RADIUS.md,
+        borderWidth: 1,
+        borderColor: COLORS.error,
+        paddingVertical: SPACING.md,
+        alignItems: "center",
+        backgroundColor: COLORS.surface,
+    },
+    secondaryButtonText: {
+        color: COLORS.error,
+        fontSize: FONT_SIZE.md,
+        fontWeight: "700",
+    },
+    bottomMessage: {
+        marginTop: SPACING.sm,
+        textAlign: "center",
+        color: COLORS.textSecondary,
+        fontSize: FONT_SIZE.xs,
+    },
 });

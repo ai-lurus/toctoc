@@ -93,6 +93,7 @@ export default function ProviderDetailScreen() {
         providerId: params.id,
         providerName: name,
         serviceName: serviceLabel,
+        providerImage: avatarUrl ?? "",
       },
     });
   };
