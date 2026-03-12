@@ -104,7 +104,7 @@ export default function SearchingScreen() {
         if (resolvedRef.current) return;
         resolvedRef.current = true;
         setState("rejected");
-        setMessage("El proveedor no aceptó tu solicitud. Puedes volver a solicitar con otro proveedor.");
+        setMessage("El proveedor rechazó tu solicitud. Puedes buscar otro proveedor.");
     }, []);
 
     const expireRequest = useCallback(async () => {
@@ -123,7 +123,7 @@ export default function SearchingScreen() {
             .from("service_requests")
             .update({ status: "cancelled", updated_at: new Date().toISOString() })
             .eq("id", requestId)
-            .eq("status", "pending");
+            .in("status", ["pending", "waiting_acceptance"]);
 
         if (error) {
             setState("error");
@@ -179,6 +179,13 @@ export default function SearchingScreen() {
             }
             if (nextStatus === "pending" || nextStatus === "waiting_acceptance") {
                 setState("pending");
+                return;
+            }
+            if (nextStatus === "cancelled") {
+                if (resolvedRef.current) return;
+                resolvedRef.current = true;
+                setState("timeout");
+                setMessage("Se agotó el tiempo de espera y no aceptaron tu solicitud.");
             }
         },
         [resolveAccepted, resolveRejected]
@@ -419,7 +426,7 @@ export default function SearchingScreen() {
             <View style={styles.footer}>
                 {isResolvedState ? (
                     <TouchableOpacity style={styles.primaryButton} onPress={goBackToProviders}>
-                        <Text style={styles.primaryButtonText}>Volver a solicitar</Text>
+                        <Text style={styles.primaryButtonText}>Buscar otro proveedor</Text>
                     </TouchableOpacity>
                 ) : (
                     <>
