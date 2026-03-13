@@ -5,7 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { COLORS, SPACING, FONT_SIZE, BORDER_RADIUS } from "@/lib/constants";
 
 export default function RegisterErrorScreen() {
-  const { role } = useLocalSearchParams<{ role: string }>();
+  const { role, message } = useLocalSearchParams<{ role: string; message: string }>();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -20,7 +20,7 @@ export default function RegisterErrorScreen() {
           No se pudo completar el registro
         </Text>
         <Text style={styles.submessage}>
-          Por favor, verifica tu información e intenta nuevamente
+          {message || "Por favor, verifica tu información e intenta nuevamente"}
         </Text>
 
         <View style={styles.actions}>
@@ -49,7 +49,7 @@ export default function RegisterErrorScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFF5F5",
+    backgroundColor: COLORS.errorBackground,
   },
   content: {
     flex: 1,
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     width: 88,
     height: 88,
     borderRadius: 44,
-    backgroundColor: "#FEE2E2",
+    backgroundColor: COLORS.errorLight,
     alignItems: "center",
     justifyContent: "center",
     marginBottom: SPACING.xl,
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
   retryButtonText: {
     fontSize: FONT_SIZE.md,
     fontWeight: "600",
-    color: "#FFF",
+    color: COLORS.white,
   },
   backLink: {
     fontSize: FONT_SIZE.sm,

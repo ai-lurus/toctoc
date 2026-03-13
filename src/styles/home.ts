@@ -7,7 +7,6 @@ export const styles = StyleSheet.create({
         backgroundColor: COLORS.background,
     },
     header: {
-        paddingHorizontal: SPACING.lg,
         paddingTop: SPACING.md,
         paddingBottom: SPACING.md,
         flexDirection: "row",
@@ -35,7 +34,6 @@ export const styles = StyleSheet.create({
         backgroundColor: COLORS.surface,
         borderRadius: BORDER_RADIUS.lg,
         padding: SPACING.md,
-        marginHorizontal: SPACING.lg,
         marginTop: SPACING.md,
         borderWidth: 1,
         borderColor: COLORS.primaryLight,
@@ -106,7 +104,6 @@ export const styles = StyleSheet.create({
         backgroundColor: COLORS.success,
         borderRadius: BORDER_RADIUS.lg,
         padding: SPACING.md,
-        marginHorizontal: SPACING.lg,
         marginTop: SPACING.lg,
     },
     expressContent: {
@@ -129,13 +126,15 @@ export const styles = StyleSheet.create({
         fontSize: FONT_SIZE.md,
         fontWeight: "700",
         color: COLORS.text,
-        marginHorizontal: SPACING.lg,
         marginTop: SPACING.xl,
         marginBottom: SPACING.sm,
     },
     grid: {
-        paddingHorizontal: SPACING.lg - SPACING.xs,
+        paddingHorizontal: SPACING.lg,
         paddingBottom: SPACING.xl,
+    },
+    gridRow: {
+        gap: SPACING.sm,
     },
     empty: {
         flex: 1,

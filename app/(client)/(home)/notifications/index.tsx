@@ -1,9 +1,10 @@
 import { useMemo, useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
-import { router } from "expo-router";
+import { Stack } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
-import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
-import { styles } from "./styles";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { getStandardHeaderOptions } from "@/lib/navigation";
+import { styles } from "@/styles/notifications";
 
 type NotificationTab = "all" | "unread";
 
@@ -19,7 +20,6 @@ interface NotificationItem {
 const INITIAL_NOTIFICATIONS: NotificationItem[] = [];
 
 export default function NotificationsScreen() {
-  const insets = useSafeAreaInsets();
   const [activeTab, setActiveTab] = useState<NotificationTab>("all");
   const [notifications, setNotifications] = useState(INITIAL_NOTIFICATIONS);
 
@@ -48,16 +48,7 @@ export default function NotificationsScreen() {
 
   return (
     <SafeAreaView style={styles.container} edges={["left", "right", "bottom"]}>
-      <View style={[styles.header, { paddingTop: insets.top + 8 }]}>
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => router.back()}
-          activeOpacity={0.7}
-        >
-          <Ionicons name="chevron-back" size={20} color="#fff" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Notificaciones</Text>
-      </View>
+      <Stack.Screen options={getStandardHeaderOptions({ title: "Notificaciones" })} />
 
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         <View style={styles.filtersWrap}>

@@ -14,7 +14,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { useAuthStore } from "@/store/authStore";
 import { COLORS, SPACING } from "@/lib/constants";
-import { styles } from "./styles";
+import { styles } from "@/styles/profile";
 
 export default function ProfileScreen() {
   const { profile, signOut, isLoading } = useAuthStore();

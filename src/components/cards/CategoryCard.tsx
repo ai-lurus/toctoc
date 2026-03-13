@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.surface,
     borderRadius: BORDER_RADIUS.lg,
     padding: SPACING.md,
-    margin: SPACING.xs,
+    marginBottom: SPACING.sm,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.08,

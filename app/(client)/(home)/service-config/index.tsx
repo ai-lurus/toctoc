@@ -11,7 +11,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS, SPACING, FONT_SIZE } from "@/lib/constants";
 import { getStandardHeaderOptions } from "@/lib/navigation";
-import { styles } from "./styles";
+import { styles } from "@/styles/service-config";
 
 type ConfigField = {
     id: string;
@@ -150,9 +150,7 @@ export default function ServiceConfigScreen() {
                         <Text style={styles.priceNote}>El pago se realiza solo si el proveedor acepta</Text>
                     </View>
                 </View>
-            </ScrollView>
 
-            <View style={styles.footer}>
                 <TouchableOpacity
                     style={styles.searchButton}
                     onPress={() =>
@@ -168,9 +166,9 @@ export default function ServiceConfigScreen() {
                         })
                     }
                 >
-                    <Text style={styles.searchButtonText}>Buscar proveedor</Text>
+                    <Text style={styles.searchButtonText}>{providerId ? "Confirmar" : "Buscar proveedor"}</Text>
                 </TouchableOpacity>
-            </View>
+            </ScrollView>
         </SafeAreaView>
     );
 }

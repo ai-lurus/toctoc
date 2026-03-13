@@ -18,7 +18,7 @@ import { LoadingScreen } from "@/components/ui/LoadingScreen";
 import { COLORS } from "@/lib/constants";
 import { supabase } from "@/lib/supabase";
 import type { Database } from "@/types/database.types";
-import { styles } from "./styles";
+import { styles } from "@/styles/home";
 
 type RequestStatus = Database["public"]["Enums"]["request_status"];
 type ServiceRequestRow = Database["public"]["Tables"]["service_requests"]["Row"];
@@ -227,7 +227,7 @@ export default function ClientHomeScreen() {
         </View>
       ) : null}
 
-      <TouchableOpacity style={styles.expressBanner}>
+      <TouchableOpacity style={styles.expressBanner} onPress={() => router.push("/(client)/(home)/service-config")} activeOpacity={0.8}>
         <View style={styles.expressContent}>
           <Ionicons name="flash" size={24} color="white" />
           <View style={styles.expressTextContainer}>
@@ -261,6 +261,7 @@ export default function ClientHomeScreen() {
           />
         )}
         contentContainerStyle={styles.grid}
+        columnWrapperStyle={styles.gridRow}
         refreshControl={
           <RefreshControl refreshing={isLoading} onRefresh={refetch} />
         }
