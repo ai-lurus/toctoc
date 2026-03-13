@@ -14,12 +14,14 @@ import { getStandardHeaderOptions } from "@/lib/navigation";
 import { styles } from "@/styles/confirmation";
 
 export default function ConfirmationScreen() {
-    const { serviceId, serviceName, providerId, providerName, config } = useLocalSearchParams<{
+    const { serviceId, serviceName, providerId, providerName, providerImage, config, requestId } = useLocalSearchParams<{
         serviceId: string;
         serviceName: string;
         providerId: string;
         providerName: string;
+        providerImage?: string;
         config: string;
+        requestId?: string;
     }>();
 
     const parsedConfig = config ? JSON.parse(config) : {};
@@ -149,8 +151,10 @@ export default function ConfirmationScreen() {
                             serviceName,
                             providerId,
                             providerName,
+                            providerImage,
                             config,
                             amount: "240",
+                            requestId,
                         }
                     })}
                 >

@@ -1,15 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     View,
     Text,
     ScrollView,
     TouchableOpacity,
+    ActivityIndicator,
 } from "react-native";
 import { Stack, router, useLocalSearchParams } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS, SPACING, FONT_SIZE, BORDER_RADIUS } from "@/lib/constants";
 import { StyleSheet } from "react-native";
+import { supabase } from "@/lib/supabase";
+import type { Database } from "@/types/database.types";
 
 // Generate a mock transaction ID
 function generateTxId() {
@@ -31,6 +34,7 @@ export default function PaymentReceiptScreen() {
         providerName: string;
         config: string;
         amount: string;
+        requestId?: string;
     }>();
 
     const now = new Date();
@@ -45,7 +49,67 @@ export default function PaymentReceiptScreen() {
         hour12: true,
     });
 
-    const handleContinuar = () => {
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitError, setSubmitError] = useState("");
+
+    const handleContinuar = async () => {
+        if (isSubmitting) return;
+        setIsSubmitting(true);
+        setSubmitError("");
+
+        let nextRequestId = params.requestId;
+
+        if (!nextRequestId) {
+            const {
+                data: { user },
+                error: userError,
+            } = await supabase.auth.getUser();
+
+            if (userError || !user) {
+                setSubmitError("No pudimos identificar tu cuenta para crear la solicitud.");
+                setIsSubmitting(false);
+                return;
+            }
+
+            const estimatedPrice = Number(params.amount) || 240;
+            let parsedConfig: unknown = null;
+            if (params.config) {
+                try {
+                    parsedConfig = JSON.parse(params.config);
+                } catch {
+                    parsedConfig = null;
+                }
+            }
+            const scheduledAt = new Date();
+            const scheduledDate = scheduledAt.toISOString().slice(0, 10);
+            const scheduledTime = scheduledAt.toTimeString().slice(0, 5);
+
+            const { data, error } = await supabase
+                .from("service_requests")
+                .insert({
+                    client_id: user.id,
+                    provider_id: params.providerId ?? null,
+                    service_id: params.serviceId,
+                    status: "pending",
+                    address: "Av. Vallarta 1234, Zapopan",
+                    scheduled_date: scheduledDate,
+                    scheduled_time: scheduledTime,
+                    variables:
+                        parsedConfig as Database["public"]["Tables"]["service_requests"]["Insert"]["variables"],
+                    estimated_price: estimatedPrice,
+                })
+                .select("id")
+                .single();
+
+            if (error || !data?.id) {
+                setSubmitError("No pudimos crear tu solicitud. Inténtalo nuevamente.");
+                setIsSubmitting(false);
+                return;
+            }
+
+            nextRequestId = data.id;
+        }
+
         router.replace({
             pathname: "/(client)/(home)/searching",
             params: {
@@ -55,6 +119,7 @@ export default function PaymentReceiptScreen() {
                 providerName: params.providerName,
                 config: params.config,
                 amount: params.amount,
+                requestId: nextRequestId,
             },
         });
     };
@@ -138,8 +203,14 @@ export default function PaymentReceiptScreen() {
             {/* Footer */}
             <View style={styles.footer}>
                 <TouchableOpacity style={styles.continueButton} onPress={handleContinuar}>
-                    <Text style={styles.continueButtonText}>Continuar</Text>
+                    {isSubmitting ? (
+                        <ActivityIndicator color="white" />
+                    ) : (
+                        <Text style={styles.continueButtonText}>Continuar</Text>
+                    )}
                 </TouchableOpacity>
+
+                {submitError ? <Text style={styles.errorText}>{submitError}</Text> : null}
 
                 <TouchableOpacity style={styles.supportLink}>
                     <Text style={styles.supportLinkText}>
@@ -268,6 +339,12 @@ const styles = StyleSheet.create({
         padding: SPACING.lg,
         alignItems: "center",
         marginBottom: SPACING.md,
+    },
+    errorText: {
+        color: COLORS.error,
+        fontSize: FONT_SIZE.sm,
+        textAlign: "center",
+        marginBottom: SPACING.sm,
     },
     continueButtonText: {
         color: "white",

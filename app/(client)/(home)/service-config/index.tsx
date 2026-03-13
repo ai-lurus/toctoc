@@ -22,11 +22,12 @@ type ConfigField = {
 };
 
 export default function ServiceConfigScreen() {
-    const { serviceId, serviceName, providerId, providerName } = useLocalSearchParams<{
+    const { serviceId, serviceName, providerId, providerName, providerImage } = useLocalSearchParams<{
         serviceId: string;
         serviceName: string;
         providerId: string;
         providerName: string;
+        providerImage?: string;
     }>();
 
     const configFields: ConfigField[] = [
@@ -161,6 +162,7 @@ export default function ServiceConfigScreen() {
                                 serviceName,
                                 providerId,
                                 providerName,
+                                providerImage,
                                 config: JSON.stringify(formState),
                             },
                         })
