@@ -114,7 +114,6 @@ export default function ProviderDetailScreen() {
           headerStyle: { backgroundColor: COLORS.surface },
           headerShadowVisible: false,
           headerBackTitle: "",
-          headerBackTitleVisible: false,
           headerBackButtonDisplayMode: "minimal",
         }}
       />
