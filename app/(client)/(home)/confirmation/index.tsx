@@ -11,7 +11,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS, BORDER_RADIUS } from "@/lib/constants";
 import { getStandardHeaderOptions } from "@/lib/navigation";
-import { styles } from "./styles";
+import { styles } from "@/styles/confirmation";
 
 export default function ConfirmationScreen() {
     const { serviceId, serviceName, providerId, providerName, providerImage, config, requestId } = useLocalSearchParams<{
@@ -142,9 +142,6 @@ export default function ConfirmationScreen() {
                         </Text>
                     </View>
                 </View>
-            </ScrollView>
-
-            <View style={styles.footer}>
                 <TouchableOpacity
                     style={styles.confirmButton}
                     onPress={() => router.push({
@@ -163,7 +160,7 @@ export default function ConfirmationScreen() {
                 >
                     <Text style={styles.confirmButtonText}>Confirmar solicitud</Text>
                 </TouchableOpacity>
-            </View>
+            </ScrollView>
         </SafeAreaView>
     );
 }

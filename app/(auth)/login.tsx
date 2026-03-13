@@ -2,10 +2,10 @@ import {
   View,
   Text,
   StyleSheet,
-  KeyboardAvoidingView,
-  Platform,
   ScrollView,
   Alert,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import { Link, router } from "expo-router";
 import { useForm, Controller } from "react-hook-form";
@@ -19,6 +19,7 @@ import { COLORS, SPACING, FONT_SIZE } from "@/lib/constants";
 
 export default function LoginScreen() {
   const { signIn, isLoading } = useAuthStore();
+
   const {
     control,
     handleSubmit,
@@ -38,7 +39,7 @@ export default function LoginScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} edges={["top", "left", "right"]}>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.flex}
@@ -102,6 +103,8 @@ export default function LoginScreen() {
             />
           </View>
 
+          <View style={styles.spacer} />
+
           <View style={styles.footer}>
             <Text style={styles.footerText}>¿No tienes cuenta? </Text>
             <Link href="/(auth)/role-selection" style={styles.link}>
@@ -124,8 +127,11 @@ const styles = StyleSheet.create({
   },
   content: {
     flexGrow: 1,
-    justifyContent: "center",
     padding: SPACING.lg,
+    paddingTop: SPACING.xxl,
+  },
+  spacer: {
+    flex: 1,
   },
   header: {
     marginBottom: SPACING.xl,
@@ -159,6 +165,7 @@ const styles = StyleSheet.create({
   footer: {
     flexDirection: "row",
     justifyContent: "center",
+    paddingBottom: SPACING.lg,
   },
   footerText: {
     fontSize: FONT_SIZE.sm,

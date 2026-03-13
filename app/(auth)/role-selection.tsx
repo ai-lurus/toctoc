@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   ActivityIndicator,
   Modal,
   Pressable,
+  Animated,
 } from "react-native";
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
@@ -41,7 +42,31 @@ export default function RoleSelectionScreen() {
   const [showConfirm, setShowConfirm] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const slideAnim = useRef(new Animated.Value(400)).current;
+
   const selectedLabel = roles.find((r) => r.role === selectedRole)?.title ?? "";
+
+  useEffect(() => {
+    if (showConfirm) {
+      fadeAnim.setValue(0);
+      slideAnim.setValue(400);
+      Animated.parallel([
+        Animated.timing(fadeAnim, { toValue: 1, duration: 250, useNativeDriver: true }),
+        Animated.spring(slideAnim, { toValue: 0, useNativeDriver: true, damping: 20, stiffness: 180 }),
+      ]).start();
+    }
+  }, [showConfirm]);
+
+  const closeSheet = (callback?: () => void) => {
+    Animated.parallel([
+      Animated.timing(fadeAnim, { toValue: 0, duration: 200, useNativeDriver: true }),
+      Animated.timing(slideAnim, { toValue: 400, duration: 220, useNativeDriver: true }),
+    ]).start(() => {
+      setShowConfirm(false);
+      callback?.();
+    });
+  };
 
   const handleContinue = () => {
     if (!selectedRole) return;
@@ -52,22 +77,24 @@ export default function RoleSelectionScreen() {
     if (!selectedRole) return;
 
     if (!user) {
-      setShowConfirm(false);
-      router.push({
-        pathname: "/(auth)/register",
-        params: { role: selectedRole },
+      closeSheet(() => {
+        router.push({
+          pathname: "/(auth)/register",
+          params: { role: selectedRole },
+        });
       });
     } else {
       try {
         await setRole(selectedRole);
-        setShowConfirm(false);
-        router.replace({
-          pathname: "/(auth)/welcome",
-          params: { role: selectedRole },
+        closeSheet(() => {
+          router.replace({
+            pathname: "/(auth)/welcome",
+            params: { role: selectedRole },
+          });
         });
       } catch (err: any) {
-        setShowConfirm(false);
-        setError(err.message);
+        closeSheet();
+        setError((err as any).message);
       }
     }
   };
@@ -156,11 +183,16 @@ export default function RoleSelectionScreen() {
       <Modal
         visible={showConfirm}
         transparent
-        animationType="slide"
-        onRequestClose={() => setShowConfirm(false)}
+        animationType="none"
+        onRequestClose={() => closeSheet()}
       >
-        <Pressable style={styles.overlay} onPress={() => setShowConfirm(false)}>
-          <Pressable style={styles.sheet} onPress={() => {}}>
+        <View style={styles.overlay}>
+          {/* Fondo que hace fade independientemente del sheet */}
+          <Animated.View style={[StyleSheet.absoluteFill, styles.overlayBg, { opacity: fadeAnim }]}>
+            <Pressable style={StyleSheet.absoluteFill} onPress={() => closeSheet()} />
+          </Animated.View>
+          {/* Sheet que sube desde abajo */}
+          <Animated.View style={[styles.sheet, { transform: [{ translateY: slideAnim }] }]}>
             <View style={styles.sheetHandle} />
 
             <View style={styles.sheetIconCircle}>
@@ -199,13 +231,13 @@ export default function RoleSelectionScreen() {
 
             <TouchableOpacity
               style={styles.cancelButton}
-              onPress={() => setShowConfirm(false)}
+              onPress={() => closeSheet()}
               disabled={isLoading}
             >
               <Text style={styles.cancelButtonText}>Cancelar</Text>
             </TouchableOpacity>
-          </Pressable>
-        </Pressable>
+          </Animated.View>
+        </View>
       </Modal>
     </SafeAreaView>
   );
@@ -329,8 +361,10 @@ const styles = StyleSheet.create({
   // Bottom sheet
   overlay: {
     flex: 1,
-    backgroundColor: "rgba(0,0,0,0.45)",
     justifyContent: "flex-end",
+  },
+  overlayBg: {
+    backgroundColor: "rgba(0,0,0,0.45)",
   },
   sheet: {
     backgroundColor: COLORS.surface,

@@ -10,8 +10,8 @@ import {
 import { Stack, router, useLocalSearchParams } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
-import { COLORS } from "@/lib/constants";
-import { styles } from "./styles";
+import { COLORS, SPACING, FONT_SIZE, BORDER_RADIUS } from "@/lib/constants";
+import { styles } from "@/styles/searching";
 import { supabase } from "@/lib/supabase";
 import type { RealtimeChannel } from "@supabase/supabase-js";
 import type { Database } from "@/types/database.types";

@@ -11,7 +11,7 @@ import { router, useLocalSearchParams, Stack } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { COLORS } from "@/lib/constants";
-import { styles } from "./styles";
+import { styles } from "@/styles/providers";
 import { getStandardHeaderOptions } from "@/lib/navigation";
 
 export default function ProvidersScreen() {
@@ -23,7 +23,7 @@ export default function ProvidersScreen() {
 
     const providers = [
         {
-            id: "1",
+            id: "cccccccc-0000-0000-0000-000000000001",
             name: "María López",
             serviceType: "Limpieza general",
             rating: 4.9,
@@ -33,7 +33,7 @@ export default function ProvidersScreen() {
             image: "https://i.pravatar.cc/150?u=maria",
         },
         {
-            id: "2",
+            id: "cccccccc-0000-0000-0000-000000000002",
             name: "Juan Pérez",
             serviceType: "Limpieza profunda",
             rating: 4.7,
@@ -43,7 +43,7 @@ export default function ProvidersScreen() {
             image: "https://i.pravatar.cc/150?u=juan",
         },
         {
-            id: "3",
+            id: "cccccccc-0000-0000-0000-000000000003",
             name: "Ana García",
             serviceType: "Limpieza express",
             rating: 4.8,
@@ -51,7 +51,27 @@ export default function ProvidersScreen() {
             distance: "4.5 km",
             price: 260,
             image: "https://i.pravatar.cc/150?u=ana",
-        }
+        },
+        {
+            id: "cccccccc-0000-0000-0000-000000000004",
+            name: "Carlos Rodríguez",
+            serviceType: "Limpieza profunda",
+            rating: 4.6,
+            reviews: 89,
+            distance: "1.8 km",
+            price: 230,
+            image: "https://i.pravatar.cc/150?u=carlos_r",
+        },
+        {
+            id: "cccccccc-0000-0000-0000-000000000005",
+            name: "Rosa Martínez",
+            serviceType: "Limpieza general",
+            rating: 4.9,
+            reviews: 203,
+            distance: "3.7 km",
+            price: 250,
+            image: "https://i.pravatar.cc/150?u=rosa",
+        },
     ];
 
     const filteredProviders = useMemo(() => {
@@ -69,7 +89,7 @@ export default function ProvidersScreen() {
             <Stack.Screen
                 options={getStandardHeaderOptions({
                     title: categoryName || "Limpieza de hogar",
-                    subtitle: `${providers.length} proveedores disponibles`,
+                    subtitle: `${filteredProviders.length} proveedores disponibles`,
                 })}
             />
 
@@ -94,6 +114,7 @@ export default function ProvidersScreen() {
             <FlatList
                 data={filteredProviders}
                 keyExtractor={(item) => item.id}
+                style={styles.listContainer}
                 contentContainerStyle={styles.list}
                 renderItem={({ item }) => (
                     <TouchableOpacity
@@ -116,20 +137,7 @@ export default function ProvidersScreen() {
                             });
                         }}
                     >
-                        <TouchableOpacity
-                            onPress={() => {
-                                router.push({
-                                    pathname: "/(client)/(home)/provider-profile",
-                                    params: {
-                                        providerId: item.id,
-                                        providerName: item.name,
-                                        serviceName: item.serviceType
-                                    },
-                                })
-                            }}
-                        >
-                            <Image source={{ uri: item.image }} style={styles.avatar} />
-                        </TouchableOpacity>
+                        <Image source={{ uri: item.image }} style={styles.avatar} />
 
                         <View style={styles.cardContent}>
                             <Text style={styles.providerName}>{item.name}</Text>

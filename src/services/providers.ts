@@ -14,6 +14,8 @@ export interface EnrichedReview extends Review {
 
 export interface EnrichedProviderService extends ProviderService {
   service_name: string;
+  service_description: string | null;
+  service_icon: string;
 }
 
 export interface ProviderProfile extends Profile {
@@ -70,28 +72,35 @@ export async function getProviderById(
     reviewer_name: reviewerNames[review.reviewer_id] ?? "Usuario",
   }));
 
-  // Enrich services with service names
+  // Enrich services with name, description and icon
   const providerServices = (servicesRes.data ??
     []) as unknown as ProviderService[];
   const serviceIds = providerServices.map((ps) => ps.service_id);
-  let serviceNames: Record<string, string> = {};
+
+  type ServiceInfo = { name: string; description: string | null; icon: string };
+  let serviceInfo: Record<string, ServiceInfo> = {};
 
   if (serviceIds.length > 0) {
     const { data: svcData } = await supabase
       .from("services")
-      .select("id, name")
+      .select("id, name, description, icon")
       .in("id", serviceIds);
 
-    serviceNames = (svcData ?? []).reduce(
-      (acc, s) => ({ ...acc, [s.id]: s.name }),
-      {} as Record<string, string>,
+    serviceInfo = (svcData ?? []).reduce(
+      (acc, s) => ({
+        ...acc,
+        [s.id]: { name: s.name, description: s.description, icon: s.icon },
+      }),
+      {} as Record<string, ServiceInfo>,
     );
   }
 
   const enrichedServices: EnrichedProviderService[] = providerServices.map(
     (ps) => ({
       ...ps,
-      service_name: serviceNames[ps.service_id] ?? "Servicio",
+      service_name: serviceInfo[ps.service_id]?.name ?? "Servicio",
+      service_description: serviceInfo[ps.service_id]?.description ?? null,
+      service_icon: serviceInfo[ps.service_id]?.icon ?? "construct",
     }),
   );
 

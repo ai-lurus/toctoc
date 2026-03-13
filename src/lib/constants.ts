@@ -11,8 +11,14 @@ export const COLORS = {
   textTertiary: "#9CA3AF",
   border: "#E5E7EB",
   error: "#FF5252",      // Cancel Red
+  errorLight: "#FEE2E2",
+  errorBackground: "#FFF5F5",
   success: "#10CE8A",    // Design Green (Buttons)
+  successLight: "#A7F3D0",
+  successBackground: "#ECFDF5",
+  successText: "#065F46",
   warning: "#FFC107",
+  white: "#FFFFFF",
 } as const;
 
 export const SPACING = {
