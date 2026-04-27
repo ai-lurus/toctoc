@@ -85,6 +85,18 @@ export default function ProviderDetailScreen() {
     [params.id],
   );
 
+  const handleSelectProvider = () => {
+    router.push({
+      pathname: "/(client)/(home)/service-config",
+      params: {
+        providerId: params.id,
+        providerName: name,
+        serviceName: serviceLabel,
+        providerImage: avatarUrl ?? "",
+      },
+    });
+  };
+
   // Datos reales de Supabase o valores de los params
   const name = provider?.full_name ?? params.providerName ?? "Proveedor";
   const avatarUrl = provider?.avatar_url ?? params.providerImage;
@@ -114,7 +126,6 @@ export default function ProviderDetailScreen() {
           headerStyle: { backgroundColor: COLORS.surface },
           headerShadowVisible: false,
           headerBackTitle: "",
-          headerBackTitleVisible: false,
           headerBackButtonDisplayMode: "minimal",
         }}
       />
