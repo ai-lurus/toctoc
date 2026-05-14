@@ -12,9 +12,11 @@ import { Stack, router } from "expo-router";
 import { COLORS, SPACING, FONT_SIZE, BORDER_RADIUS } from "@/lib/constants";
 import { getStandardHeaderOptions } from "@/lib/navigation";
 
+const MOCK_ACTIVE_REQUEST_ID = "00000000-0000-0000-0000-000000000001";
+
 const MOCK_UPCOMING = [
   {
-    id: "1",
+    id: MOCK_ACTIVE_REQUEST_ID,
     providerName: "María López",
     providerRating: 4.8,
     status: "En camino",
@@ -50,7 +52,10 @@ function ReservationCard({
 }: {
   item: (typeof MOCK_UPCOMING)[number];
 }) {
-  const isEnCamino = item.status === "En camino";
+  const isActiveFlowStatus =
+    item.status === "En camino" ||
+    item.status === "Servicio iniciado" ||
+    item.status === "Finalizado";
 
   return (
     <View style={styles.card}>
@@ -65,9 +70,9 @@ function ReservationCard({
             <Text style={styles.ratingText}>{item.providerRating}</Text>
           </View>
         </View>
-        <View style={[styles.statusBadge, isEnCamino && styles.statusBadgeActive]}>
-          {isEnCamino && <Ionicons name="navigate" size={11} color={COLORS.primary} />}
-          <Text style={[styles.statusText, isEnCamino && styles.statusTextActive]}>
+        <View style={[styles.statusBadge, isActiveFlowStatus && styles.statusBadgeActive]}>
+          {isActiveFlowStatus && <Ionicons name="navigate" size={11} color={COLORS.primary} />}
+          <Text style={[styles.statusText, isActiveFlowStatus && styles.statusTextActive]}>
             {item.status}
           </Text>
         </View>
@@ -91,15 +96,18 @@ function ReservationCard({
       <Text style={styles.price}>{item.price}</Text>
 
       <TouchableOpacity
-        style={[styles.detailButton, isEnCamino && styles.detailButtonActive]}
+        style={[styles.detailButton, isActiveFlowStatus && styles.detailButtonActive]}
         onPress={() =>
-          isEnCamino
-            ? router.push("/(client)/(history)/service-progress" as any)
+          isActiveFlowStatus
+            ? router.push({
+              pathname: "/(client)/(home)/service-active",
+              params: { requestId: item.id },
+            })
             : router.push("/(client)/(history)/booking-detail" as any)
         }
       >
-        <Text style={[styles.detailButtonText, isEnCamino && styles.detailButtonTextActive]}>
-          {isEnCamino ? "Ver estado" : "Ver detalles"}
+        <Text style={[styles.detailButtonText, isActiveFlowStatus && styles.detailButtonTextActive]}>
+          {isActiveFlowStatus ? "Ver estado" : "Ver detalles"}
         </Text>
       </TouchableOpacity>
     </View>
